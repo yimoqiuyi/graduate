@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.PatentMapper">
+    <resultMap id="getAllpatent" type="patent">
+        <id property="patentId" column="patent_id"/>
+        <result property="patentCategory" column="patent_category"/>
+        <result property="patentName" column="patent_name"/>
+        <result property="patentPeopleName" column="patent_people_name"/>
+        <result property="patentCreatePeopleName" column="patent_create_people_name"/>
+        <result property="patentApplyTime" column="patent_apply_time"/>
+        <result property="patentApplyNumber" column="patent_apply_number"/>
+        <result property="dateofAuthorization" column="dateof_authorization"/>
+        <result property="authorizedPatentNumber" column="authorized_patent_number"/>
+        <result property="patentAuditTime" column="patent_audit_time"/>
+        <result property="patentState" column="patent_state"/>
+        <result property="achievementsId" column="achievements_id"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <association property="achievements" column="achievements_id" fetchType="lazy"
+                     select="com.yp.common.mapper.AchievementsMapper.selectAchievementsBypatentId"/>
+        <collection property="patentFileList" column="patent_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PatentFileMapper.seletcAllPatentFileBypatent_id"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        patent_id,patent_category,patent_name,patent_people_name,patent_create_people_name,patent_apply_time,
+        patent_apply_number,dateof_authorization,authorized_patent_number,patent_audit_time,patent_state,achievements_id,group_id,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOnePatentByid" parameterType="int" resultType="patent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+        <where>
+            <if test="_parameter!=null">and patent_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectPatentsByGroupId" parameterType="int" resultType="int">
+        select count(*) from t_patent where group_id=#{_parameter}
+    </select>
+
+    <select id="selectAllPatentBygroupId" parameterType="int" resultMap="getAllpatent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+        <where>
+            <if test="_parameter!=null">and group_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllPatentBysubParkId" parameterType="int" resultMap="getAllpatent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllPatentBygeneralParkId" parameterType="int" resultMap="getAllpatent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectAllPatent" parameterType="int" resultMap="getAllpatent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+    </select>
+    <select id="selectPatentByGroupIdAndState" parameterType="int" resultMap="getAllpatent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+        <where>
+            <if test="groupId!=null">and group_id=#{groupId}</if>
+            <if test="patentState!=null">and patent_state=#{patentState}</if>
+        </where>
+    </select>
+    <select id="selectPatentByLimit" parameterType="java.util.Map" resultMap="getAllpatent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <select id="selectPatentByGroupIdandLimit" parameterType="java.util.Map" resultMap="getAllpatent">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patent
+        <where>
+            <if test="map.groupId!=null">and group_id=#{map.groupId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertOnePatent" parameterType="patent" useGeneratedKeys="true" keyProperty="patentId">
+        insert into t_patent(patent_category,patent_name,patent_people_name,patent_create_people_name,patent_apply_time,patent_apply_number,
+       dateof_authorization,authorized_patent_number,patent_audit_time,patent_state,achievements_id,group_id,sub_park_id,general_park_id)
+       values
+       (#{patentCategory,jdbcType=VARCHAR},#{patentName,jdbcType=VARCHAR},#{patentPeopleName,jdbcType=VARCHAR},#{patentCreatePeopleName,jdbcType=VARCHAR},#{patentApplyTime,jdbcType=VARCHAR},#{patentApplyNumber,jdbcType=VARCHAR},
+       #{dateofAuthorization,jdbcType=VARCHAR},#{authorizedPatentNumber,jdbcType=VARCHAR},#{patentAuditTime,jdbcType=VARCHAR},#{patentState,jdbcType=INTEGER},#{achievementsId,jdbcType=INTEGER},#{groupId,jdbcType=INTEGER},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOnePatent" parameterType="patent">
+        update t_patent
+        <trim prefix="set" suffixOverrides=",">
+            <if test="patentCategory!=null">patent_category=#{patentCategory},</if>
+            <if test="patentName!=null">patent_name=#{patentName},</if>
+            <if test="patentPeopleName!=null">patent_people_name=#{patentPeopleName},</if>
+            <if test="patentCreatePeopleName!=null">patent_create_people_name=#{patentCreatePeopleName},</if>
+            <if test="patentApplyTime!=null">patent_apply_time=#{patentApplyTime},</if>
+            <if test="patentApplyNumber!=null">patent_apply_number=#{patentApplyNumber},</if>
+            <if test="dateofAuthorization!=null">dateof_authorization=#{dateofAuthorization},</if>
+            <if test="authorizedPatentNumber!=null">authorized_patent_number=#{authorizedPatentNumber},</if>
+            <if test="patentAuditTime!=null">patent_audit_time=#{patentAuditTime},</if>
+            <if test="patentState!=null">patent_state=#{patentState},</if>
+            <if test="achievementsId!=null">achievements_id=#{achievementsId},</if>
+            <if test="groupId!=null">group_id=#{groupId},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where patent_id=#{patentId}
+    </update>
+
+    <delete id="delectOnePatentByid" parameterType="int">
+        delete from t_patent where patent_id=#{_parameter}
+    </delete>
+    <delete id="deletePatentByAchievementsId" parameterType="int">
+        delete from t_patent where achievements_id=#{achievementsId}
+    </delete>
+</mapper>

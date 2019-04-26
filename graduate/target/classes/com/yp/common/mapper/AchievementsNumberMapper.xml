@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.AchievementsNumberMapper">
+    <resultMap id="getAllachievementsNumber" type="achievementsNumber">
+        <id property="achievementsNumId" column="achievements_num_id" jdbcType="INTEGER"/>
+        <result property="patentNum" column="patent_num" jdbcType="INTEGER"/>
+        <result property="softwareNum" column="software_num" jdbcType="INTEGER"/>
+        <result property="paperNum" column="paper_num" jdbcType="INTEGER"/>
+        <result property="competitionNum" column="competition_num" jdbcType="INTEGER"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <association property="group" column="group_id" select="com.yp.common.mapper.GroupMapper.selectOneGroupById"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        achievements_num_id,patent_num,software_num,paper_num,competition_num,group_id
+    </sql>
+    <select id="getAllAchievementsNumber" resultMap="getAllachievementsNumber">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievementsNumber
+    </select>
+    <select id="selectOneAchievementsNumber" parameterType="int" resultType="achievementsNumber">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievementsNumber
+        <where>
+            <if test="_parameter !=null and _parameter !=''">
+                and group_id=#{_parameter}
+            </if>
+        </where>
+    </select>
+    <update id="updateOneAchievementsNumber" parameterType="achievementsNumber">
+        update t_achievementsNumber
+        <trim prefix="set" suffixOverrides=",">
+            <if test="patentNum!=null">patent_num=#{patentNum},</if>
+            <if test="softwareNum!=null">software_num=#{softwareNum},</if>
+            <if test="paperNum!=null">paper_num=#{paperNum},</if>
+            <if test="competitionNum!=null">competition_num=#{competitionNum},</if>
+            <if test="groupId!=null">group_id=#{groupId,jdbcType=INTEGER},</if>
+        </trim>
+        where achievements_num_id=#{achievementsNumId}
+    </update>
+    <insert id="insertAchievementsNumber" parameterType="achievementsNumber" useGeneratedKeys="true"
+            keyProperty="achievementsNumId">
+        insert into t_achievementsNumber(patent_num,software_num,paper_num,competition_num,group_id) values
+        (#{patentNum ,jdbcType=INTEGER},#{softwareNum,jdbcType=INTEGER},#{paperNum,jdbcType=INTEGER},#{competitionNum,jdbcType=INTEGER},#{groupId,jdbcType=INTEGER})
+    </insert>
+    <delete id="delectOneAchievementsNumber" parameterType="int">
+        delete from t_achievementsNumber where group_id=#{groupId,jdbcType=INTEGER}
+    </delete>
+    <delete id="delectOneAchievementsNumberById" parameterType="int">
+        delete from t_achievementsNumber where achievements_num_id=#{achievementsNumId}
+    </delete>
+</mapper>

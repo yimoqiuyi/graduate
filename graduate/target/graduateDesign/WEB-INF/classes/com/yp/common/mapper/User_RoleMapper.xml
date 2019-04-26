@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.User_RoleMapper">
+    <resultMap id="getAlluserRole" type="user_Role">
+        <id property="id" column="id"/>
+        <result property="userRoleName" column="user_role_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="roleId" column="role_id"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,user_role_name,user_id,role_id
+    </sql>
+    <select id="selectOneUserRole" parameterType="int" resultType="user_Role">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user_role
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectUserRoleByUserId" parameterType="int" resultType="user_Role">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user_role
+        <where>
+            <if test="userId!=null">and user_id=#{userId}</if>
+        </where>
+    </select>
+    <insert id="insertOneUserRole" parameterType="user_Role" useGeneratedKeys="true" keyProperty="id">
+        insert  into t_user_role(user_role_name,user_id,role_id) values
+        (#{userRoleName,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{roleId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateUserRole" parameterType="user_Role">
+        update t_user_role
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userRoleName!=null">user_role_name=#{userRoleName},</if>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="roleId=!null">role_id=#{roleId},</if>
+        </trim>
+        where id=#{id}
+    </update>
+    <delete id="deleteOneUserRoleById" parameterType="int">
+        delete from t_user_role where id=#{id}
+    </delete>
+</mapper>

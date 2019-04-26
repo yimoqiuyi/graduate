@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.WorkhealthMapper">
+    <resultMap id="getAllworkhealth" type="workhealth">
+        <id property="whId" column="wh_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="sId" column="s_id"/>
+    </resultMap>
+
+    <insert id="insertOneWorkhealth" parameterType="workhealth" useGeneratedKeys="true" keyProperty="whId">
+        insert into t_workhealth(user_id,s_id) values (#{userId},#{sId})
+    </insert>
+    <update id="updateOneWorkhealth" parameterType="workhealth">
+        update t_workhealth
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userId!=null">  user_id=#{userId},</if>
+              s_id=#{sId},
+        </trim>
+        where wh_id=#{whId}
+    </update>
+    <delete id="deleteOneWorkhealthById" parameterType="int">
+        delete from t_workhealth where wh_id=#{whId}
+    </delete>
+    <delete id="deleteWorkHealthByUserId" parameterType="int">
+        delete  from t_workhealth where user_id=#{userId}
+    </delete>
+</mapper>

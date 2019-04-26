@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.AssessmentReportMapper">
+    <resultMap id="getAllassessmentReport" type="assessmentReport">
+        <id column="report_id" property="reportId" jdbcType="INTEGER"/>
+        <result column="assessment_message" property="assessmentMessage" jdbcType="VARCHAR"/>
+        <result column="s_description" property="sDescription" jdbcType="VARCHAR"/>
+        <result column="attendance_description" property="attendanceDescription" jdbcType="VARCHAR"/>
+        <result column="group_id" property="groupId" jdbcType="INTEGER"/>
+        <association property="group" column="group_id"
+                     select="com.yp.common.mapper.GroupMapper.selectOneGroupById"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        report_id,assessment_message,s_description,attendance_description,group_id
+    </sql>
+    <select id="selectAssessmentReportById" parameterType="int" resultType="assessmentReport">
+        select
+        <include refid="Base_Column_List"/>
+        from t_assessmentreport where report_id=#{reportId}
+    </select>
+    <select id="selectOneAssessmentReportByid" parameterType="int" resultType="assessmentReport">
+        select
+        <include refid="Base_Column_List"/>
+        from t_assessmentreport where group_id=#{_parameter}
+    </select>
+    <select id="selectAllAssessmentReport" resultMap="getAllassessmentReport">
+        select
+        <include refid="Base_Column_List"/>
+        from t_assessmentreport
+    </select>
+    <insert id="insertAssessmentReport" parameterType="assessmentReport" useGeneratedKeys="true" keyProperty="reportId">
+        insert into t_assessmentreport(assessment_message,s_description,attendance_description,group_id)
+         values
+        (#{assessmentMessage},#{sDescription},#{attendanceDescription},#{groupId})
+    </insert>
+
+    <update id="updateAssessmentReport" parameterType="assessmentReport">
+        update t_assessmentreport
+        <trim prefix="set" suffixOverrides=",">
+            <if test="reportId!=null">report_id=#{reportId},</if>
+            <if test="assessmentMessage!=null">assessment_message=#{assessmentMessage},</if>
+            <if test="sDescription!=null">s_description=#{sDescription},</if>
+            <if test="attendanceDescription!=null">attendance_description=${attendanceDescription},</if>
+            <if test="groupId!=null">group_id=#{groupId,jdbcType=INTEGER}</if>
+        </trim>
+        where report_id=#{reportId}
+    </update>
+    <delete id="delectAssessmentReportByid" parameterType="int">
+        delete from t_assessmentreport where report_id=#{reportId}
+    </delete>
+    <delete id="delectAllAssessmentReport">
+        delete from t_assessmentreport
+    </delete>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.AttendanceMapper">
+    <resultMap id="getAllattendance" type="attendance">
+        <id property="attendanceId" column="attendance_id" jdbcType="INTEGER"/>
+        <result property="attendanceCategory" column="attendance_category" jdbcType="VARCHAR"/>
+        <result property="attendanceScore" column="attendance_score" jdbcType="INTEGER"/>
+        <collection property="userList" column="attendance_id"
+                    select="com.yp.common.mapper.UserMapper.selectUserByAttendanceId"
+                    fetchType="lazy"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        attendance_id,attendance_category,attendance_score
+    </sql>
+    <select id="selectAllAttendance" resultMap="getAllattendance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_attendance
+    </select>
+    <select id="selectAttendanceByUserId" parameterType="int" resultMap="getAllattendance">
+      select
+         a.attendance_id,a.attendance_category,a.attendance_score
+        from t_attendance a,t_workattendance wt,t_user u
+        where
+         u.user_id=#{userId}
+         and
+         u.user_id=wt.user_id
+         and
+         a.attendance_id=wt.attendance_id
+
+    </select>
+    <insert id="insertAttendance" parameterType="attendance" useGeneratedKeys="true" keyProperty="attendanceId">
+        insert into t_attendance(attendance_category,attendance_score)
+        values (#{attendanceCategory},#{attendanceScore})
+    </insert>
+    <update id="updateAttendance" parameterType="attendance">
+        update t_attendance
+        <trim prefix="set" suffixOverrides=",">
+            <if test="attendanceCategory!=null">attendance_category=#{attendanceCategory},</if>
+            <if test="attendanceScore!=null">attendance_score=#{attendanceScore},</if>
+        </trim>
+        where attendance_id=#{attendanceId,jdbcType=INTEGER}
+    </update>
+    <delete id="delectOneAttendanceByid" parameterType="int">
+      delete  from t_attendance where attendance_id=#{attendanceId,jdbcType=INTEGER}
+  </delete>
+    <delete id="delectAllAttendance">
+        delete from t_attendance
+    </delete>
+    <select id="selectOneAttendanceById" parameterType="int" resultType="attendance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_attendance where attendance_id=#{attendanceId,jdbcType=INTEGER}
+    </select>
+ </mapper>

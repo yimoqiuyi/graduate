@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.ResponsibilityagreementMapper">
+    <resultMap id="getAllresponsibilityagreement" type="responsibilityagreement">
+        <id property="responsibleId" column="responsible_id"/>
+        <result property="responsibleName" column="responsible_name"/>
+        <result property="responsibleIntroduce" column="responsible_introduce"/>
+        <result property="filePath" column="file_path"/>
+        <result property="signDate" column="sign_date"/>
+        <result property="expirationDate" column="expiration_date"/>
+        <result property="argeementId" column="argeement_id"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <association property="agreement" column="argeement_id"
+                     select="com.yp.common.mapper.AgreementMapper.selectAgreementByresponsibleId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        responsible_id,responsible_name,responsible_introduce,file_path,sign_date,expiration_date,argeement_id,group_id,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOneResponsibilityagreementById" parameterType="int" resultType="responsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="responsibleId!=null">and responsible_id=#{responsibleId}</if>
+        </where>
+    </select>
+    <select id="selectAllResponsibilityagreementBygroupId" parameterType="int"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="_parameter!=null">and group_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllResponsibilityagreementBysubParkId" parameterType="int"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllResponsibilityagreementBygeneralParkId" parameterType="int"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectAllResponsibilityagreementByTimeAndgroupId" parameterType="dateutile"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and group_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectAllResponsibilityagreementByTimeAndsubParkId" parameterType="dateutile"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and sub_park_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectAllResponsibilityagreementByTimeAndgeneralParkId" parameterType="dateutile"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and general_park_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectResponsibilityagreementBymap" parameterType="java.util.Map"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId} limit #{map.page},#{map.limit}</if>
+        </where>
+    </select>
+    <select id="selectResponsibilityagreementByCondition" parameterType="java.util.Map"
+            resultMap="getAllresponsibilityagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_responsibilityagreement
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+            <if test="map.signDate!=null">and sign_date &gt;= #{map.signDate}</if>
+            <if test="map.expirationDate!=null ">and expiration_date &lt;= #{map.expirationDate}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertOneResponsibilityagreement" parameterType="responsibilityagreement" useGeneratedKeys="true"
+            keyProperty="responsibleId">
+        insert into t_responsibilityagreement(responsible_name,responsible_introduce,file_path,sign_date,expiration_date,argeement_id,group_id,sub_park_id,general_park_id)
+        values
+        (#{responsibleName,jdbcType=VARCHAR},#{responsibleIntroduce,jdbcType=VARCHAR},#{filePath,jdbcType=VARCHAR},#(signDate,jdbcType=VARCHAR),#{expirationDate,jdbcType=VARCHAR},#{argeementId,jdbcType=INTEGER},#{groupId,jdbcType=INTEGER},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneResponsibilityagreement" parameterType="responsibilityagreement">
+        update t_responsibilityagreement
+        <trim prefix="set" suffixOverrides=",">
+            <if test="responsibleName!=null">responsible_name=#{responsibleName},</if>
+            <if test="responsibleIntroduce!=null">responsible_introduce=#{responsibleIntroduce},</if>
+            <if test="filePath!=null">file_path=#{filePath},</if>
+            <if test="signDate!=null">sign_date=#{signDate},</if>
+            <if test="expirationDate!=null">expiration_date=#{expirationDate},</if>
+            <if test="argeementId!=null">argeement_id=#{argeementId},</if>
+            <if test="groupId!=null">group_id=#{groupId,jdbcType=INTEGER},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where responsible_id=#{responsibleId}
+    </update>
+    <delete id="responsibleId" parameterType="int">
+        delete from t_responsibilityagreement where responsible_id=#{responsibleId}
+    </delete>
+</mapper>

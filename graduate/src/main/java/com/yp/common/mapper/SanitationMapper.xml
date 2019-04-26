@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.SanitationMapper">
+    <resultMap id="getAllsanitation" type="sanitation">
+        <id property="sId" column="s_id"/>
+        <result property="sanitationCategory" column="sanitation_category"/>
+        <result property="sanitationScore" column="sanitation_score"/>
+        <collection property="userList" column="s_id" fetchType="lazy"
+                    select="com.yp.common.mapper.UserMapper.selectUserBysId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        s_id,sanitation_category,sanitation_score
+    </sql>
+    <select id="selectOneSanitationById" parameterType="int" resultType="sanitation">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sanitation
+        where s_id=#{sId,jdbcType=INTEGER}
+    </select>
+    <!--多对多-->
+    <select id="selectSanitationByUserId" parameterType="int" resultMap="getAllsanitation">
+       select
+         s.s_id,s.sanitation_category,s.sanitation_score
+         from t_sanitation s,t_workhealth w,t_user u
+         where
+          u.user_id=#{userId}
+          and
+          u.user_id=w.user_id
+          and
+          s.s_id=w.s_id
+     </select>
+    <select id="selectAllSanitation" resultMap="getAllsanitation">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sanitation
+    </select>
+    <insert id="insertOneSanitation" parameterType="sanitation" useGeneratedKeys="true" keyProperty="sId">
+        insert into t_sanitation(sanitation_category,sanitation_score) values (#{sanitationCategory,jdbcType=VARCHAR},#{sanitationScore,jdbcType=INTEGER});
+    </insert>
+    <update id="updateOneSanitation" parameterType="sanitation">
+        update t_sanitation
+        <trim prefix="set" suffixOverrides=",">
+            <if test="sanitationCategory!=null">sanitation_category=#{sanitationCategory},</if>
+            <if test="sanitationScore!=null">sanitation_score=#{sanitationScore},</if>
+        </trim>
+        where s_id=#{sId,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteOneSanitationById" parameterType="int">
+        delete from t_sanitation where s_id=#{sId}
+    </delete>
+</mapper>

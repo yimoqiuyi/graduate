@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.PaperMapper">
+    <resultMap id="getAllpaper" type="paper">
+        <id property="paperId" column="paper_id"/>
+        <result property="paperName" column="paper_name"/>
+        <result property="authors" column="authors"/>
+        <result property="authorUnit" column="author_unit"/>
+        <result property="journalName" column="journal_name"/>
+        <result property="paperAuditTime" column="paper_audit_time"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="grade" column="grade"/>
+        <result property="achievementsId" column="achievements_id"/>
+        <result property="paperState" column="paper_state"/>
+        <result property="paperPath" column="paper_path"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <association property="achievements" column="achievements_id"
+                     select="com.yp.common.mapper.AchievementsMapper.selectAchievementsBypaperId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        paper_id,paper_name,authors,author_unit,journal_name,paper_audit_time,group_id,grade,achievements_id,paper_state,paper_path,sub_park_id,general_park_id
+      </sql>
+    <select id="selectOnePaper" parameterType="int" resultType="paper">
+        select
+        <include refid="Base_Column_List"/>
+        from t_paper
+        <where>
+            <if test="paperId!=null">and paper_id=#{paperId}</if>
+        </where>
+    </select>
+    <select id="selectPapersbyGroupId" parameterType="int" resultType="int">
+        select  count(*) from t_paper where group_id=#{_parameter}
+    </select>
+    <select id="selectAllPaperBygroupId" parameterType="int" resultMap="getAllpaper">
+        select
+        <include refid="Base_Column_List"/>
+        from t_paper
+        <where>
+            <if test="_parameter!=null">and group_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllPaperBysubParkId" parameterType="int" resultMap="getAllpaper">
+        select
+        <include refid="Base_Column_List"/>
+        from t_paper
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllPaperBygeneralParkId" parameterType="int" resultMap="getAllpaper">
+        select
+        <include refid="Base_Column_List"/>
+        from t_paper
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectPaperByGroupIdAndState" parameterType="int" resultMap="getAllpaper">
+        select
+        <include refid="Base_Column_List"/>
+        from t_paper
+        <where>
+            <if test="groupId!=null">and group_id=#{groupId}</if>
+            <if test="paperState!=null">and paper_state=#{paperState}</if>
+        </where>
+    </select>
+
+    <select id="selectPaperByLimit" parameterType="java.util.Map" resultMap="getAllpaper">
+        select
+        <include refid="Base_Column_List"/>
+        from t_paper
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+
+    <select id="selectPaperByGroupIdandLimit" parameterType="java.util.Map" resultMap="getAllpaper">
+        select
+        <include refid="Base_Column_List"/>
+        from t_paper
+        <where>
+            <if test="map.groupId!=null">and group_id=#{map.groupId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertOnePaper" parameterType="paper" useGeneratedKeys="true" keyProperty="paperId">
+        insert into t_paper(paper_name,authors,author_unit,journal_name,paper_audit_time,group_id,grade,achievements_id,paper_state,paper_path,sub_park_id,general_park_id)
+        values
+        (#{paperName,jdbcType=VARCHAR},#{authors,jdbcType=VARCHAR},#{authorUnit,jdbcType=VARCHAR},#{journalName,jdbcType=VARCHAR},
+        #{paperAuditTime,jdbcType=VARCHAR},#{groupId,jdbcType=INTEGER},#{grade,jdbcType=VARCHAR},#{achievementsId,jdbcType=INTEGER},#{paperState,jdbcType=INTEGER},#{paperPath,jdbcType=VARCHAR},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updatePaper" parameterType="paper">
+        update t_paper
+        <trim prefix="set" suffixOverrides=",">
+            <if test="paperName!=null">paper_name=#{paperName},</if>
+            <if test="authors!=null">authors=#{authors},</if>
+            <if test="authorUnit!=null">author_unit=#{authorUnit},</if>
+            <if test="journalName!=null">journal_name=#{journalName},</if>
+            <if test="paperAuditTime!=null">paper_audit_time=#{paperAuditTime},</if>
+            <if test="groupId!=null">group_id=#{groupId},</if>
+            <if test="grade!=null">grade=#{grade},</if>
+            <if test="achievementsId!=null">achievements_id=#{achievementsId},</if>
+            <if test="paperState!=null">paper_state=#{paperState},</if>
+            <if test="paperPath!=null">paper_path=#{paperPath},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where paper_id=#{paperId}
+    </update>
+    <delete id="delectOnePaper" parameterType="int">
+        delete from t_paper where paper_id=#{paperId}
+    </delete>
+
+    <delete id="delectAllaper">
+        delete from t_paper
+    </delete>
+    <delete id="deletePaperByAchievementsId" parameterType="int">
+        delete from t_paper where achievements_id=#{achievementsId}
+    </delete>
+</mapper>

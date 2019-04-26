@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.BuildingMapper">
+    <resultMap id="getAllbuilding" type="building">
+        <id property="buildId" column="build_id" jdbcType="INTEGER"/>
+        <result property="floorPicture" column="floor_picture"/>
+        <result property="roomNumber" column="room_number"/>
+        <result property="buildStation" column="build_station"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <collection property="roomList" column="build_id" fetchType="lazy"
+                    select="com.yp.common.mapper.RoomMapper.selectRoomByBuildId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        build_id,floor_picture,room_number,build_station,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOneBuildingBybuildId" parameterType="int" resultType="building">
+        select
+        <include refid="Base_Column_List"/>
+        from t_building
+        where
+        build_id=#{_parameter}
+    </select>
+    <select id="selectAllBuilding" resultMap="getAllbuilding">
+        select
+        <include refid="Base_Column_List"/>
+        from t_building
+    </select>
+    <select id="selectAllBuildingBysubParkId" parameterType="int" resultMap="getAllbuilding">
+        select
+        <include refid="Base_Column_List"/>
+        from t_building
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                and sub_park_id=#{_parameter}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllBuildingBygeneralParkId" parameterType="int" resultMap="getAllbuilding">
+        select * from t_building
+        <where>
+            <if test="generalParkId!=null and generalParkId!=''">
+                and general_park_id=#{generalParkId}
+            </if>
+        </where>
+    </select>
+    <insert id="insertOneBuilding" parameterType="building" useGeneratedKeys="true" keyProperty="buildId">
+        insert into t_building(floor_picture,room_number,build_station,sub_park_id,general_park_id)
+        values(#{floorPicture,jdbcType=VARCHAR},#{roomNumber,jdbcType=INTEGER},#{buildStation,jdbcType=VARCHAR},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneBuildingById" parameterType="int">
+        update t_building
+        <trim prefix="set" suffixOverrides=",">
+            <if test="buildId!=null">build_id=#{buildId,jdbcType=INTEGER},</if>
+            <if test="floorPicture!=null">floor_picture=#{floorPicture},</if>
+            <if test="roomNumber!=null">room_number=#{roomNumber},</if>
+            <if test="buildStation!=null">build_station=#{buildStation},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where build_id=#{buildId,jdbcType=INTEGER}
+    </update>
+    <delete id="delectBuildingByid" parameterType="int">
+        delete from t_building where build_id=#{_parameter}
+    </delete>
+    <delete id="delectAllBuilding">
+        delete from t_building
+    </delete>
+</mapper>

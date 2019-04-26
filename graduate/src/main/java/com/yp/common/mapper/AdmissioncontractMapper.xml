@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.AdmissioncontractMapper">
+    <resultMap id="getAllAdmissioncontract" type="admissioncontract">
+        <id property="admissionId" column="admission_id" jdbcType="INTEGER"/>
+        <result property="admissionName" column="admission_name" jdbcType="VARCHAR"/>
+        <result property="admissionIntroduce" column="admission_introduce" jdbcType="VARCHAR"/>
+        <result property="filePath" column="file_path" jdbcType="VARCHAR"/>
+        <result property="agreementId" column="agreement_id" jdbcType="INTEGER"/>
+        <result property="signDate" column="sign_date" jdbcType="VARCHAR"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="subParkId" column="sub_park_id" jdbcType="INTEGER"/>
+        <result property="generalParkId" column="general_park_id" jdbcType="INTEGER"/>
+        <association property="agreement" column="agreement_id"
+                     select="com.yp.common.mapper.AgreementMapper.selectOneAgreementById"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        admission_id,admission_name,admission_introduce,file_path,agreement_id,sign_date,expiration_date,group_id,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOneAdmissioncontract" parameterType="int" resultType="admissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="admissionId !=null and admissionId !=''">
+                and admission_id=#{admissionId}
+            </if>
+        </where>
+    </select>
+    <select id="selectOneAllAdmissioncontract" parameterType="int" resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="_parameter !=null and _parameter !=''">
+                and group_id=#{_parameter}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllAdmissioncontract" resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+    </select>
+    <select id="selectAllAdmissioncontractBysubParkId" parameterType="int" resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from admissioncontract
+        <where>
+            <if test="_parameter !=null and _parameter !=''">
+                and sub_park_id=#{_parameter}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllAdmissioncontractBygeneralParkId" parameterType="int" resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="generalParkId !=null and generalParkId !=''">
+                and general_park_id=#{generalParkId}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllAdmissioncontractBytimeandgroupID" parameterType="dateutile"
+            resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="id!=null and id!=''">
+                and group_id=#{id}
+            </if>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllAdmissioncontractByTimeAndsubParkId" parameterType="dateutile"
+            resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="subParkId!=null and subParkId!=''">
+                and sub_park_id=#{id}
+            </if>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllAdmissioncontractByTimeAndgeneralParkId" parameterType="dateutile"
+            resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="generalParkId!=null and generalParkId!=''">
+                and general_park_id=#{id}
+            </if>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllAdmissioncontractBytime" parameterType="dateutile" resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAdmissioncontractByLimit" parameterType="int" resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="subParkId!=null">and sub_park_id=#{subParkId} limit #{page},#{limit}</if>
+        </where>
+    </select>
+
+    <select id="selectAdmissioncontractByCondition" parameterType="java.util.Map" resultMap="getAllAdmissioncontract">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admissioncontract
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+            <if test="map.signDate!=null">and sign_date &gt;= #{map.signDate}</if>
+            <if test="map.expirationDate!=null"> and expiration_date &lt;= #{map.expirationDate}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertOneAdmissioncontract" parameterType="admissioncontract" useGeneratedKeys="true"
+            keyProperty="admissionId">
+         insert into t_admissioncontract(admission_name,admission_introduce,file_path,agreement_id,sign_date,expiration_date,group_id,sub_park_id,general_park_id)
+         values (#{admissionName},#{admissionIntroduce},#{filePath},#{agreementId},#{signDate},#{expirationDate},#{groupId},#{subParkId},#{generalParkId})
+        </insert>
+    <delete id="delectOneAdmissioncontractByid" parameterType="int">
+        delete from admissioncontract where 1=1
+        <if test="admissionId!=null and admissionId!=''">
+            and admission_id=#{admissionId}
+        </if>
+    </delete>
+    <update id="updateOneAdmissioncontractByid" parameterType="admissioncontract">
+        update t_admissioncontract
+        <trim prefix="set" suffixOverrides=",">
+            <if test="admissionId!=null">admission_id=#{admissionId,jdbcType=INTEGER},</if>
+            <if test="admissionName!=null">admission_name=#{admissionName,jdbcType=VARCHAR},</if>
+            <if test="admissionIntroduce!=null">admissionIntroduce=#{admission_introduce,jdbcType=VARCHAR},</if>
+            <if test="filePath!=null">file_path=#{filePath,jdbcType=VARCHAR},</if>
+            <if test="agreementId!=null">agreement_id=#{agreementId,jdbcType=INTEGER},</if>
+            <if test="signDate!=null">sign_date=#{signDate},</if>
+            <if test="expirationDate!=null">expiration_date=#{expirationDate},</if>
+            <if test="groupId!=null">group_id=#{groupId，jdbcType=INTEGER},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generalParkId=!null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where admission_id=#{admissionId}
+    </update>
+    <delete id="delectAllAdmissioncontract">
+        delete from t_admissioncontract
+    </delete>
+</mapper>

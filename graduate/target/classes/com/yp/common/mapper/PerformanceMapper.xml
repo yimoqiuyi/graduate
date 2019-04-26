@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.PerformanceMapper">
+    <resultMap id="getAllPerformance" type="performance">
+        <id property="performanceId" column="performance_id"/>
+        <result property="performanceScore" column="performance_score"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="groupName" column="group_name"/>
+        <result property="groupId" column="group_id"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        performance_id,performance_score,start_time,end_time,group_name,group_id,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOnePerformance" parameterType="int" resultType="performance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        where performance_id=#{performanceId}
+    </select>
+    <select id="selectPerformanceByGroupId" parameterType="int" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <where>
+            <if test="_parameter!=null">and group_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectPerformanceBySubparkId" parameterType="int" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectPerformanceByGeneralParkId" parameterType="int" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectPerformanceByGroupIdAndTime" parameterType="dateutile" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and start_time &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and end_time &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and group_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectPerformanceBySubparkIdAndTime" parameterType="dateutile" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and start_time &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and end_time &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and sub_park_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectPerformanceByGeneralParkIdAndTime" parameterType="dateutile" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and start_time &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and end_time &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and genereal_park_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectPerformanceBySubparkIdAndLimit" parameterType="int" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <where>
+            <if test="subParkId!=null">and sub_park_id=#{subParkId} limit #{page},#{limit}</if>
+        </where>
+    </select>
+    <select id="selectPerformanceByCondition" parameterType="java.util.Map" resultMap="getAllPerformance">
+        select
+        <include refid="Base_Column_List"/>
+        from t_performance
+        <trim prefix="where" prefixOverrides="and">
+            <if test="map.condition !=null and map.condition !='' ">
+                and group_name like concat('%',#{map.condition,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="map.subParkId !=null and map.subParkId !='' ">
+                and sub_park_id =#{map.subParkId}
+            </if>
+        </trim>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertPerformance" parameterType="performance" useGeneratedKeys="true"
+            keyProperty="performanceId">
+          insert into t_performance(performance_score,start_time,end_time,group_name,group_id,sub_park_id,general_park_id)
+          values
+          (#{performanceScore,jdbcType=VARCHAR},#{startTime,jdbcType=VARCHAR},#{endTime,jdbcType=VARCHAR},#{groupName,jdbcType=VARCHAR},
+          #{groupId,jdbcType=INTEGER},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER})
+      </insert>
+    <update id="updatePerformance" parameterType="performance">
+        update t_performance
+        <trim prefix="set" suffixOverrides=",">
+            <if test="performanceScore!=null">performance_score=#{performanceScore},</if>
+            <if test="startTime!=null">start_time=#{startTime},</if>
+            <if test="endTime!=null">end_time=#{endTime},</if>
+            <if test="groupName!=null">group_name=#{groupName},</if>
+            <if test="groupId!=null">group_id=#{groupId},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generealParkId!=null">genereal_park_id=#{generealParkId},</if>
+        </trim>
+        where performance_id=#{performanceId}
+    </update>
+    <delete id="deletePerformanceById" parameterType="int">
+        delete from t_performance
+        where performance_id=#{performanceId}
+    </delete>
+</mapper>

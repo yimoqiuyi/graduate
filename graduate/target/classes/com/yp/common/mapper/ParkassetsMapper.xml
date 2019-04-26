@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.ParkassetsMapper">
+    <resultMap id="getAllparkassets" type="parkassets">
+        <id property="assetId" column="asset_id"/>
+        <result property="tableNum" column="table_num"/>
+        <result property="chairNum" column="chair_num"/>
+        <result property="airconditioningNum" column="airconditioning_num"/>
+        <result property="curtainNum" column="curtain_num"/>
+        <result property="WaterdispenserNum" column="waterdispenser_num"/>
+        <result property="electricboardNum" column="electricboard_num"/>
+        <result property="roomId" column="room_id"/>
+        <association property="room" column="room_id" select="com.yp.common.mapper.RoomMapper.selectRoomByassetId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        asset_id,table_num,chair_num,airconditioning_num,curtain_num,waterdispenser_num,electricboard_num,room_id
+    </sql>
+    <select id="selectOneParkassetsByid" parameterType="int" resultType="parkassets">
+        select
+        <include refid="Base_Column_List"/>
+        from t_parkassets
+        where asset_id=#{assetId}
+
+    </select>
+    <select id="selectOneParkassetsByroomId" parameterType="int" resultType="parkassets">
+        select
+        <include refid="Base_Column_List"/>
+        from t_parkassets
+        <where>
+            <if test="roomId!=null">and room_id=#{roomId}</if>
+        </where>
+    </select>
+    <select id="selectAllParkassets" resultMap="getAllparkassets">
+        select
+        <include refid="Base_Column_List"/>
+        from t_parkassets
+    </select>
+    <insert id="insertOneParkassets" parameterType="parkassets" useGeneratedKeys="true" keyProperty="assetId">
+        insert  into t_parkassets(table_num,chair_num,airconditioning_num,curtain_num,waterdispenser_num,electricboard_num,room_id)
+        values
+        (#{tableNum,jdbcType=INTEGER},#{chairNum,jdbcType=INTEGER},#{airconditioningNum,jdbcType=INTEGER},#{curtainNum,jdbcType=INTEGER},#{WaterdispenserNum,jdbcType=INTEGER},#{electricboardNum,jdbcType=INTEGER},#{roomId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneParkassets" parameterType="parkassets">
+        update t_parkassets
+        <trim prefix="set" suffixOverrides=",">
+            <if test="tableNum!=null">table_num=#{tableNum},</if>
+            <if test="chairNum!=null">chair_num=#{chairNum},</if>
+            <if test="airconditioningNum!=null">airconditioning_num=#{airconditioningNum},</if>
+            <if test="curtainNum!=null">curtain_num=#{curtainNum},</if>
+            <if test="WaterdispenserNum!=null">waterdispenser_num=#{WaterdispenserNum},</if>
+            <if test="electricboardNum!=null">electricboard_num=#{electricboardNum},</if>
+            <if test="roomId!=null">room_id=#{roomId},</if>
+        </trim>
+        where asset_id=#{assetId}
+    </update>
+    <delete id="delectOneParkassetsByid" parameterType="int">
+        delete from t_parkassets where asset_id=#{assetId}
+    </delete>
+    <delete id="deleteParkassetsByRoomId" parameterType="int">
+        delete from t_parkassets where room_id=#{roomId}
+    </delete>
+</mapper>

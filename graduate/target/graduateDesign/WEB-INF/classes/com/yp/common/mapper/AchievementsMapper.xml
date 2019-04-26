@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.AchievementsMapper">
+    <resultMap id="getAll" type="achievements">
+        <id property="achievementsId" column="achievements_id" jdbcType="INTEGER"/>
+        <result property="achievementsName" column="achievements_name" jdbcType="VARCHAR"/>
+        <result property="achievementsIntroduction" column="achievements_introduction" jdbcType="VARCHAR"/>
+        <result property="achievementsCategory" column="achievements_category" jdbcType="VARCHAR"/>
+        <result property="achievementsScore" column="achievements_score" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        achievements_id,achievements_name,achievements_introduction,achievements_category,achievements_score
+     </sql>
+    <select id="getAllachievements" resultMap="getAll">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievements
+    </select>
+    <select id="selectAchievementsBycompetitionId" parameterType="int" resultType="achievements">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievements
+        where competition_id=#{competitionId}
+    </select>
+    <select id="selectAchievementsBypaperId" parameterType="int" resultType="achievements">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievements
+        where patent_id=#{patentId}
+    </select>
+    <select id="selectAchievementsBysoftId" parameterType="int" resultType="achievements">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievements
+        where soft_id=#{softId}
+    </select>
+    <select id="selectAchievementsByName" parameterType="String" resultType="achievements">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievements
+        where achievements_name=#{achievementsName}
+    </select>
+    <select id="selectAchievementsByachievementsId" parameterType="int" resultType="achievements">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievements
+        where achievements_id=#{achievementsId}
+    </select>
+    <select id="selectAchievementsBypatentId" parameterType="int" resultType="achievements">
+        select
+        <include refid="Base_Column_List"/>
+        from t_achievements
+        where patent_id=#{patentId}
+    </select>
+    <update id="updateAchievement">
+        update t_achievements
+        <trim prefix="set" suffixOverrides=",">
+            <if test="achievementsName!=null">achievements_name=#{achievementsName},</if>
+            <if test="achievementsIntroduction!=null">achievements_introduction=#{achievementsIntroduction},
+            </if>
+            <if test="achievementsCategory!=null">achievements_category=#{achievementsCategory},</if>
+            <if test="achievementsScore!=null">achievements_score=#{achievementsScore},</if>
+        </trim>
+        where achievements_id=#{achievementsId}
+    </update>
+    <insert id="insertAchievements" parameterType="achievements" useGeneratedKeys="true" keyProperty="achievementsId">
+         insert into t_achievements(achievements_name,achievements_introduction,achievements_category,achievements_score)
+        values(#{achievementsName,jdbcType=VARCHAR},#{achievementsIntroduction,jdbcType=VARCHAR},#{achievementsCategory,jdbcType=VARCHAR},#{achievementsScore,jdbcType=INTEGER})
+    </insert>
+    <delete id="delectAchievements">
+        delete from t_achievements where achievements_id=#{achievementsId}
+    </delete>
+</mapper>

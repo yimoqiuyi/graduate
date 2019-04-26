@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.GeneralParkMapper">
+    <resultMap id="getAllgeneralPark" type="generalPark">
+        <id property="generalParkId" column="general_park_id"/>
+        <result property="generalName" column="general_name"/>
+        <result property="generalIntroduce" column="general_introduce"/>
+        <result property="generalPicture" column="general_picture"/>
+        <result property="generalPhone" column="general_phone"/>
+        <result property="userId" column="user_id"/>
+        <collection property="subParkList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.SubParkMapper.selectAllSubParkBygeneralParkId"/>
+        <collection property="roomList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.RoomMapper.selectRoomBygeneralParkId"/>
+        <collection property="buildingList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.BuildingMapper.selectAllBuildingBygeneralParkId"/>
+        <collection property="patentList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PatentMapper.selectAllPatentBygeneralParkId"/>
+        <collection property="softwareList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.SoftwareMapper.selectAllSoftwareBygeneralParkId"/>
+        <collection property="paperList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PaperMapper.selectAllPaperBygeneralParkId"/>
+        <collection property="competitionList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.CompetitionMapper.selectAllCompetitionBygeneralParkId"/>
+        <collection property="admissioncontractList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.AdmissioncontractMapper.selectAllAdmissioncontractBygeneralParkId"/>
+        <collection property="managementagreementList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.ManagementagreementMapper.selectAllManagementagreementBygeneralParkId"/>
+        <collection property="responsibilityagreementList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.ResponsibilityagreementMapper.selectAllResponsibilityagreementBygeneralParkId"/>
+        <collection property="userList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.UserMapper.selectUserbygeneralParkId"/>
+        <collection property="performanceList" column="general_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PerformanceMapper.selectPerformanceByGeneralParkId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        general_park_id,general_name,general_introduce,general_picture,general_phone,user_id
+    </sql>
+    <select id="selectOneGeneralParkBygeneralParkId" parameterType="int" resultType="generalPark">
+        select
+        <include refid="Base_Column_List"/>
+        from t_generalpark
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectGeneralParkByid" parameterType="int" resultType="generalPark">
+        select
+        <include refid="Base_Column_List"/>
+        from t_generalpark
+        <where>
+            <if test="userId!=null">and user_id=#{userId}</if>
+        </where>
+    </select>
+    <select id="selectAllGeneralPark" resultMap="getAllgeneralPark">
+        select
+        <include refid="Base_Column_List"/>
+        from t_generalpark
+    </select>
+    <insert id="insertGeneralPark" parameterType="generalPark" useGeneratedKeys="true" keyProperty="generalParkId">
+        insert into t_generalpark(general_name,general_introduce,general_picture,general_phone,user_id)
+        values
+        (#{generalName},#{generalIntroduce},#{generalPicture},#{generalPhone},#{userId})
+    </insert>
+    <update id="updateGeneralPark" parameterType="generalPark">
+        update t_generalpark
+        <trim prefix="set" suffixOverrides=",">
+            <if test="generalName!=null">general_name=#{generalName},</if>
+            <if test="generalIntroduce!=null">general_introduce=#{generalIntroduce},</if>
+            <if test="generalPicture!=null">general_picture=#{generalPicture},</if>
+            <if test="generalPhonegeneralPhone!=null">general_phone=#{generalPhone},</if>
+            <if test="userId!=null">user_id=#{userId},</if>
+        </trim>
+        where general_park_id=#{generalParkId}
+    </update>
+    <delete id="delectGeneralParkByuserId" parameterType="int">
+        delete from t_generalpark
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </delete>
+    <delete id="delectAllGeneralPark">
+        delete from t_generalpark
+    </delete>
+</mapper>

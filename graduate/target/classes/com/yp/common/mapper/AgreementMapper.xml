@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.AgreementMapper">
+    <resultMap id="getAllagreement" type="agreement">
+        <id property="agreementId" column="agreement_id" jdbcType="INTEGER"/>
+        <result property="agreementName" column="agreement_name" jdbcType="VARCHAR"/>
+        <result property="agreementCategory" column="agreement_category" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        agreement_id,agreement_name,agreement_category
+    </sql>
+    <select id="selectOneAgreementById" parameterType="int" resultType="agreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_agreement
+        where agreement_id=#{agreementId}
+
+
+    </select>
+    <select id="selectAllAgreement" resultMap="getAllagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_agreement
+    </select>
+    <select id="selectAgreementBymanagementId" parameterType="int" resultType="agreement">
+        select * from t_agreement
+        <where>
+            <if test="managementId!=null and managementId!=''">
+                and management_id=#{managementId}
+            </if>
+        </where>
+    </select>
+    <select id="selectAgreementByresponsibleId" parameterType="int" resultType="agreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_agreement
+        where responsible_id=#{responsibleId}
+    </select>
+    <insert id="insertAgreement" parameterType="agreement" useGeneratedKeys="true" keyProperty="agreementId">
+        insert into t_agreement(agreement_name,agreement_category) values (#{agreementName},#{agreementCategory})
+    </insert>
+    <delete id="delectAgreementByid" parameterType="int">
+        delete from t_agreement where agreement_id=#{agreementId}
+    </delete>
+    <update id="updateAgreementByid" parameterType="agreement">
+        update t_agreement
+        <trim prefix="set" suffixOverrides=",">
+            <if test="agreementId!=null">agreement_id=#{agreementId,jdbcType=INTEGER},</if>
+            <if test="agreementName!=null">agreement_name=#{agreementName},</if>
+            <if test="agreementCategory!=null">agreement_category=#{agreementCategory},</if>
+        </trim>
+        where agreement_id=#{agreementId}
+    </update>
+
+</mapper>

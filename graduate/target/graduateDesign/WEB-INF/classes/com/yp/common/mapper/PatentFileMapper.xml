@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.PatentFileMapper">
+    <resultMap id="getAllpatentFile" type="patentFile">
+        <id property="id" column="id"/>
+        <result property="pfName" column="pf_name"/>
+        <result property="pfPath" column="pf_path"/>
+        <result property="patentId" column="patent_id"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,pf_name,pf_path,patent_id
+    </sql>
+    <select id="seletcAllPatentFileBypatent_id" parameterType="int" resultMap="getAllpatentFile">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patentfile
+        <where>
+            <if test="_parameter!=null">and patent_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectOnePatentFileById" parameterType="int" resultType="patentFile">
+        select
+        <include refid="Base_Column_List"/>
+        from t_patentfile
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+        </where>
+    </select>
+    <insert id="insertPatentFile" parameterType="patentFile" useGeneratedKeys="true" keyProperty="id">
+        insert  into t_patentfile(pf_name,pf_path,patent_id) values
+        (#{pfName,jdbcType=VARCHAR},#{pfPath,jdbcType=VARCHAR},#{patentId,jdbcType=INTEGER})
+    </insert>
+    <delete id="deletePatentFileByPatentId" parameterType="int">
+        delete p from t_patentfile p inner join t_patent t on p.patent_id = t.patent_id and t.patent_id=#{patentId}
+    </delete>
+</mapper>

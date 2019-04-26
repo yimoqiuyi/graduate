@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.SubParkMapper">
+    <resultMap id="getAllsubPark" type="subPark">
+        <id property="subParkId" column="sub_park_id"/>
+        <result property="subParkName" column="sub_park_name"/>
+        <result property="subParkIntroduce" column="sub_park_introduce"/>
+        <result property="subParkPhone" column="sub_park_introduce"/>
+        <result property="subParkPicture" column="sub_park_picture"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <result property="userId" column="user_id"/>
+        <collection property="userList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.UserMapper.selectAllUserBySubParkId"/>
+        <collection property="groupList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.GroupMapper.selectAllGroupBysubParkId"/>
+        <collection property="roomList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.RoomMapper.selectAllRoomBysubParkId"/>
+        <collection property="buildingList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.BuildingMapper.selectAllBuildingBysubParkId"/>
+        <collection property="patentList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PatentMapper.selectAllPatentBysubParkId"/>
+        <collection property="softwareList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.SoftwareMapper.selectAllSoftwareBysubParkId"/>
+        <collection property="paperList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PaperMapper.selectAllPaperBysubParkId"/>
+        <collection property="competitionList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.CompetitionMapper.selectAllCompetitionBysubParkId"/>
+        <collection property="admissioncontractList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.AdmissioncontractMapper.selectAllAdmissioncontractBysubParkId"/>
+        <collection property="managementagreementList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.ManagementagreementMapper.selectAllManagementagreementBysubParkId"/>
+        <collection property="responsibilityagreementList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.ResponsibilityagreementMapper.selectAllResponsibilityagreementBysubParkId"/>
+        <collection property="performanceList" column="sub_park_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PerformanceMapper.selectPerformanceBySubparkId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        sub_park_id,sub_park_name,sub_park_introduce,sub_park_picture,general_park_id
+    </sql>
+    <select id="selectOneSubParkById" parameterType="int" resultType="subPark">
+        select
+        <include refid="Base_Column_List"/>
+        from t_subpark
+        where sub_park_id=#{_parameter}
+    </select>
+    <select id="selectAllSubparkByUserId" parameterType="int" resultType="subPark">
+        select
+        <include refid="Base_Column_List"/>
+        from t_subpark
+        <where>
+            <if test="userId!=null">and user_id=#{userId}</if>
+        </where>
+    </select>
+    <select id="selectAllSubParkBygeneralParkId" parameterType="int" resultMap="getAllsubPark">
+        select
+        <include refid="Base_Column_List"/>
+        from t_subpark
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <insert id="insertOneSubPark" parameterType="subPark" useGeneratedKeys="true" keyProperty="subParkId">
+      insert into t_subpark(sub_park_name,sub_park_introduce,sub_park_picture,general_park_id) values
+      (#{subParkName,jdbcType=VARCHAR},#{subParkIntroduce,jdbcType=VARCHAR},#{subParkPhone,jdbcType=VARCHAR},#{subParkPicture,jdbcType=VARCHAR},#{generalParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneSubPark" parameterType="subPark">
+        update t_subpark
+        <trim prefix="set" suffixOverrides=",">
+            <if test="subParkName!=null">sub_park_name=#{subParkName},</if>
+            <if test="subParkIntroduce!=null">sub_park_introduce=#{subParkIntroduce},</if>
+            <if test="subParkPhone!=null">sub_park_phone=#{subParkPhone},</if>
+            <if test="subParkPicture!=null">sub_park_picture=#{subParkPicture},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where sub_park_id=#{subParkId}
+    </update>
+    <delete id="deleteOneSubPark" parameterType="int">
+        delete from t_subpark where sub_park_id=#{_parameter}
+    </delete>
+</mapper>

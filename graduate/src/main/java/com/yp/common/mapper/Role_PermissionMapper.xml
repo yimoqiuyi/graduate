@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.Role_PermissionMapper">
+    <resultMap id="getAllrolePermission" type="role_Permission">
+        <id property="id" column="id"/>
+        <result property="permissionId" column="permission_id"/>
+        <result property="roleId" column="role_id"/>
+     </resultMap>
+    <sql id="Base_Column_List">
+        id,permission_id,role_id
+    </sql>
+    <select id="selecteOneRole_PermissionById" parameterType="int" resultType="role_Permission">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role_permission
+        <where>
+            <if test="id!=null and id!=''">and id=#{id}</if>
+        </where>
+    </select>
+    <insert id="insertOneRole_Permission" parameterType="role_Permission" useGeneratedKeys="true" keyProperty="id">
+        insert into t_role_permission(permission_id,role_id) values
+        (#{permissionId,jdbcType=VARCHAR},#{roleId,jdbcType=INTEGER})
+    </insert>
+    <delete id="deleteOneRole_Permission" parameterType="int">
+        delete from t_role_permission where id=#{id}
+    </delete>
+    <delete id="deleteRole_PermissionByroleIdAndId" parameterType="int">
+        delete form t_role_permission where role_id=#{roleId} and permission_id=#{id}
+    </delete>
+</mapper>

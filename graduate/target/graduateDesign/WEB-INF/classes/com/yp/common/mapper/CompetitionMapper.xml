@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.CompetitionMapper">
+    <resultMap id="getAllcompetition" type="com.yp.common.pojo.Competition">
+        <id property="competitionId" column="competition_id"/>
+        <result property="competitionName" column="competition_name"/>
+        <result property="competitionLevel" column="competition_level"/>
+        <result property="sponsor" column="sponsor"/>
+        <result property="nameofMember" column="nameof_member"/>
+        <result property="awardLevel" column="award_level"/>
+        <result property="competitionAuditTime" column="competition_audit_time"/>
+        <result property="competitionPath" column="competition_path"/>
+        <result property="competitionState" column="competition_state"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="achievementsId" column="achievements_id"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <association property="achievements" column="achievements_id"
+                     select="com.yp.common.mapper.AchievementsMapper.selectAchievementsBycompetitionId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        competition_id,competition_name,competition_level,sponsor,nameof_member,award_level,competition_audit_time,competition_path,competition_state,
+        group_id,achievements_id,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOneCompetitionBycompetitionId" parameterType="int" resultType="com.yp.common.pojo.Competition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+        <where>
+            <if test="competitionId!=null and competitionId!=''">and competition_id=#{competitionId}</if>
+        </where>
+    </select>
+    <select id="selctCompetitionsBygroupId" parameterType="int" resultType="int">
+        select count(*) from t_competition where group_id=#{groupId,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllCompetitionBygroupId" parameterType="int" resultMap="getAllcompetition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+        <where>
+            <if test="_parameter!=null">
+                and group_id=#{_parameter}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllCompetition" resultMap="getAllcompetition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+    </select>
+    <select id="selectAllCompetitionBysubParkId" parameterType="int" resultMap="getAllcompetition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                and sub_park_id=#{_parameter}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllCompetitionBygeneralParkId" parameterType="int" resultMap="getAllcompetition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+        <where>
+            <if test="generalParkId!=null and generalParkId!=''">
+                and general_park_id=#{generalParkId}
+            </if>
+        </where>
+    </select>
+    <select id="selectCompetionByGroupIdAndcompetitionState" parameterType="int" resultMap="getAllcompetition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+        <where>
+            <if test="groupId!=null">
+                and group_id=#{groupId}
+            </if>
+            <if test="competitionState!=null">and competition_state=#{competitionState}</if>
+        </where>
+    </select>
+    <select id="selectCompetitionByLimit" parameterType="java.util.Map" resultMap="getAllcompetition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+
+    <select id="selectCompetitionByGroupIdandLimit" parameterType="java.util.Map" resultMap="getAllcompetition">
+        select
+        <include refid="Base_Column_List"/>
+        from t_competition
+        <where>
+            <if test="map.groupId!=null">and group_id=#{map.groupId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertCompetition" parameterType="com.yp.common.pojo.Competition" useGeneratedKeys="true" keyProperty="competitionId">
+        insert into t_competition(competition_name,competition_level,sponsor,nameof_member,award_level,competition_audit_time,competition_path,competition_state,group_id,achievements_id,sub_park_id,general_park_id)
+        values
+        (#{competitionName},#{competitionLevel},#{sponsor},#{nameofMember},#{awardLevel},#{competitionAuditTime},#{competitionPath},#{competitionState},
+        #{groupId},#{achievementsId},#{subParkId},#{generalParkId})
+    </insert>
+    <update id="updateCompetition" parameterType="com.yp.common.pojo.Competition">
+        update t_competition
+        <trim prefix="set" suffixOverrides=",">
+            <if test="competition.competitionName!=nlll">competition_name=#{competitionName},</if>
+            <if test="competition.competitionLevel!=null">competition_level+#{competitionLevel},</if>
+            <if test="competition.sponsor!=null">sponsor=#{sponsor},</if>
+            <if test="competition.nameofMember!=null">nameof_member=#{nameofMember},</if>
+            <if test="competition.awardLevel!=null">award_level=#{awardLevel},</if>
+            <if test="competition.competitionAuditTime!=null">competition_audit_time=#{competitionAuditTime},</if>
+            <if test="competition.competitionPath!=null">competition_path=#{competitionPath},</if>
+            <if test="competition.competitionState!=null">competition_state=#{competitionState},</if>
+            <if test="competition.groupId!=null">group_id=#{groupId},</if>
+            <if test="competition.achievementsId!=null">achievements_id=#{achievementsId},</if>
+            <if test="competition.subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="competition.generalParkId!=null">general_park_id={generalParkId},</if>
+        </trim>
+        where competition_id=#{competitionId}
+    </update>
+
+    <delete id="deleteComptitionById" parameterType="int">
+    delete from t_competition where competition_id=#{competitionId}
+</delete>
+
+    <delete id="deleteCompitionByAchievementsId" parameterType="int">
+        delete from t_competition where achievements_id=#{achievementsId}
+    </delete>
+</mapper>

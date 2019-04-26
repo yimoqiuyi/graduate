@@ -1,0 +1,5 @@
+<root>
+    <item name='org.apache.ibatis.mapping.ResultMap'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

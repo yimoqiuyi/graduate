@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.GroupMapper">
+    <resultMap id="getAllgroup" type="group">
+        <id property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="groupName" column="group_name"/>
+        <result property="groupIntroduce" column="group_introduce"/>
+        <result property="attendancePass" column="attendance_pass"/>
+        <result property="groupWorkHealthPass" column="group_work_health_pass"/>
+        <result property="groupWorkAttendancePass" column="group_work_attendance_pass"/>
+        <result property="userId" column="user_id"/>
+        <result property="state" column="state"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <collection property="userList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.UserMapper.selectAllUserBygroupId"/>
+        <collection property="workPositionList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.WorkPositionMapper.selectAllWorkPositionBygroupId"/>
+        <collection property="paperList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PaperMapper.selectAllPaperBygroupId"/>
+        <collection property="patentList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PatentMapper.selectAllPatentBygroupId"/>
+        <collection property="softwareList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.SoftwareMapper.selectAllSoftwareBygroupId"/>
+        <collection property="competitionList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.CompetitionMapper.selectAllCompetitionBygroupId"/>
+        <collection property="admissioncontractList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.AdmissioncontractMapper.selectOneAllAdmissioncontract"/>
+        <collection property="managementagreementList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.ManagementagreementMapper.selectAllManagementagreementBygroupId"/>
+        <collection property="responsibilityagreementList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.ResponsibilityagreementMapper.selectAllResponsibilityagreementBygroupId"/>
+        <collection property="performanceList" column="group_id" fetchType="lazy"
+                    select="com.yp.common.mapper.PerformanceMapper.selectPerformanceByGroupId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        group_id,group_name,group_introduce,attendance_pass,group_work_health_pass,group_work_attendance_pass,user_id,state,sub_park_id
+    </sql>
+    <select id="selectOneGroupById" parameterType="int" resultType="group">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        where group_id=#{_parameter}
+     </select>
+    <select id="selectOneGroupByuserId" parameterType="int" resultType="group">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        <where>
+            <if test="userId!=null">and user_id=#{userId}</if>
+        </where>
+    </select>
+    <select id="selectAllGroupBysubParkId" parameterType="int" resultMap="getAllgroup">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllGroup" resultMap="getAllgroup">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+    </select>
+    <select id="selectAllGroupByState" parameterType="int" resultMap="getAllgroup">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        <where>
+            <if test="state!=null">and state=#{state}</if>
+        </where>
+    </select>
+    <select id="selectAllGroupBystateAndsubParkId" parameterType="int" resultMap="getAllgroup">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        <where>
+            <if test="state!=null">and state=#{state}</if>
+            <if test="subParkId!=null">and sub_park_id=#{subParkId}</if>
+        </where>
+    </select>
+    <select id="selectGroupByLimit" parameterType="int" resultMap="getAllgroup">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        <where>
+            <if test="subParkId!=null">and sub_park_id=#{subParkId} limit #{page},#{limit}</if>
+        </where>
+    </select>
+
+    <select id="selectGroupByCondition" parameterType="java.util.Map" resultMap="getAllgroup">
+        select
+        <include refid="Base_Column_List"/>
+        from t_group
+        <trim prefix="where" prefixOverrides="and">
+        <if test="map.condition !=null and map.condition !='' ">
+            and group_name like concat('%',#{map.condition,jdbcType=VARCHAR},'%')
+        </if>
+         <if test="map.subParkId !=null and map.subParkId !='' ">
+            and sub_park_id =#{map.subParkId}
+        </if>
+    </trim>
+       limit #{map.page},#{map.limit}
+     </select>
+
+    <insert id="insertOneGroup" parameterType="group" useGeneratedKeys="true" keyProperty="groupId">
+        insert into t_group(group_name,group_introduce,attendance_pass,group_work_health_pass,group_work_attendance_pass,user_id,state,sub_park_id)
+        values
+        (#{groupName,jdbcType=VARCHAR},#{groupIntroduce,jdbcType=VARCHAR},#{attendancePass,jdbcType=VARCHAR},#{groupWorkHealthPass,},#{groupWorkAttendancePass,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{state,jdbcType=INTEGER},#{subParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneGroup" parameterType="group">
+        update t_group
+        <trim prefix="set" suffixOverrides=",">
+            <if test="groupName!=null">group_name=#{groupName},</if>
+            <if test="groupIntroduce!=null">group_introduce=#{groupIntroduce},</if>
+            <if test="attendancePass!=null">attendance_pass=#{attendancePass},</if>
+            <if test="groupWorkHealthPass!=null">group_work_health_pass=#{groupWorkHealthPass},</if>
+            <if test="groupWorkAttendancePass!=null">group_work_attendance_pass=#{groupWorkAttendancePass},</if>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="state!=null">state=#{state},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+        </trim>
+        where group_id=#{groupId,jdbcType=INTEGER}
+    </update>
+    <delete id="delectOneGroupByid" parameterType="int">
+        delete from t_group where group_id=#{_parameter}
+    </delete>
+</mapper>

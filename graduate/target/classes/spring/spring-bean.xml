@@ -1,0 +1,76 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.1.xsd ">
+
+    <!-- 用户管理 -->
+    <bean id="passwordHelper" class="com.yp.common.service.PasswordHelper">
+        <property name="algorithmName" value="md5"/>
+        <property name="hashIterations" value="2"/>
+    </bean>
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">no</prop>
+                        <!--  <prop key="kaptcha.border.color">105,179,90</prop>   -->
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>
+                        <prop key="kaptcha.image.width">125</prop>
+                        <prop key="kaptcha.image.height">45</prop>
+                        <prop key="kaptcha.textproducer.font.size">45</prop>
+                        <prop key="kaptcha.session.key">code</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="salaryDao" class="com.yp.common.service.impl.SalaryDao"/>
+    <bean id="subParkService" class="com.yp.common.service.impl.SubParkServiceImpl"></bean>
+    <bean id="userService" class="com.yp.common.service.impl.UserServiceImpl">
+        <property name="passwordHelper" ref="passwordHelper"/>
+    </bean>
+    <bean id="workAttendanceService" class="com.yp.common.service.impl.WorkAttendanceServiceImpl"></bean>
+    <bean id="workhealthService" class="com.yp.common.service.impl.WorkhealthServiceImpl"></bean>
+    <bean id="workPositionService" class="com.yp.common.service.impl.WorkPositionServiceImpl"></bean>
+    <bean id="workstylePictureService" class="com.yp.common.service.impl.WorkstylePictureServiceImpl"></bean>
+    <bean id="achievementsNumberService" class="com.yp.common.service.impl.AchievementsNumberServiceImpl"></bean>
+    <bean id="achievementsService" class="com.yp.common.service.impl.AchievementsServiceImpl"></bean>
+    <bean id="admissioncontractService" class="com.yp.common.service.impl.AdmissioncontractServiceImpl"></bean>
+    <bean id="agreementService" class="com.yp.common.service.impl.AgreementServiceImpl"></bean>
+    <bean id="assessmentReportService" class="com.yp.common.service.impl.AssessmentReportServiceImpl"></bean>
+    <bean id="assessmentTableService" class="com.yp.common.service.impl.AssessmentTableServiceImpl"></bean>
+    <bean id="attendanceService" class="com.yp.common.service.impl.AttendanceServiceImpl"></bean>
+    <bean id="buildingService" class="com.yp.common.service.impl.BuildingServiceImpl"></bean>
+    <bean id="competitionService" class="com.yp.common.service.impl.CompetitionServiceImpl"></bean>
+    <bean id="generalParkService" class="com.yp.common.service.impl.GeneralParkServiceImpl"></bean>
+    <bean id="groupService" class="com.yp.common.service.impl.GroupServiceImpl"></bean>
+    <bean id="managementagreementService" class="com.yp.common.service.impl.ManagementagreementServiceImpl"></bean>
+    <bean id="paperService" class="com.yp.common.service.impl.PaperServiceImpl"></bean>
+    <bean id="parkassetsService" class="com.yp.common.service.impl.ParkassetsServiceImpl"></bean>
+    <bean id="patentFileService" class="com.yp.common.service.impl.PatentFileServiceImpl"></bean>
+    <bean id="patentService" class="com.yp.common.service.impl.PatentServiceImpl"></bean>
+    <bean id="permissionService" class="com.yp.common.service.impl.PermissionServiceImpl"></bean>
+    <bean id="responsibilityagreementService" class="com.yp.common.service.impl.ResponsibilityagreementServiceImpl"></bean>
+    <bean id="roleService" class="com.yp.common.service.impl.RoleServiceImpl"></bean>
+    <bean id="roomService" class="com.yp.common.service.impl.RoomServiceImpl"></bean>
+    <bean id="sanitationService" class="com.yp.common.service.impl.SanitationServiceImpl"></bean>
+    <bean id="softwareService" class="com.yp.common.service.impl.AgreementServiceImpl"></bean>
+    <bean id="userRoleService" class="com.yp.common.service.impl.UserRoleServiceImpl"></bean>
+    <bean id="rolePermissionService" class="com.yp.common.service.impl.RolePermissionServiceImpl"></bean>
+    <bean id="performanceService" class="com.yp.common.service.impl.PerformanceServiceImpl">
+        <property name="salaryDao" ref="salaryDao"/>
+     </bean>
+ </beans>

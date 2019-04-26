@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.ManagementagreementMapper">
+    <resultMap id="getAllmanagementagreement" type="managementagreement">
+        <id property="managementId" column="management_id"/>
+        <result property="managementName" column="management_name"/>
+        <result property="managementIntroduce" column="management_introduce"/>
+        <result property="filePath" column="file_path"/>
+        <result property="signDate" column="sign_date"/>
+        <result property="expirationDate" column="expiration_date"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <result property="agreementId" column="agreement_id"/>
+        <association property="agreement" column="agreementId"
+                     select="com.yp.common.mapper.AgreementMapper.selectAgreementBymanagementId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        management_id,management_name,management_introduce,file_path,sign_date,expiration_date,group_id,sub_park_id,general_park_id,agreement_id
+    </sql>
+    <select id="selectOneManagementagreementByid" parameterType="int" resultType="managementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="managementId!=null">and management_id=#{managementId}</if>
+        </where>
+    </select>
+    <select id="selectAllManagementagreementBygroupId" parameterType="int" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="_parameter!=null">and group_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllManagementagreementBysubParkId" parameterType="int" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllManagementagreementBygeneralParkId" parameterType="int" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectAllManagementagreementByTime" parameterType="dateutile" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and group_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectAllManagementagreementBytimeAndsubParkId" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and sub_park_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectAllManagementagreementByTimeAndgeneralParkId" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="signDate!=null and signDate!=''">
+                and sign_date &gt;= #{signDate}
+            </if>
+            <if test="expirationDate!=null and expirationDate!=''">
+                and expiration_date &lt;= #{expirationDate}
+            </if>
+            <if test="id!=null">and general_park_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectAllManagementagreement" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+    </select>
+    <select id="selectManagementagreementByMap" parameterType="java.util.Map" resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+
+    <select id="selectManagementagreementByCondition" parameterType="java.util.Map"
+            resultMap="getAllmanagementagreement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_managementagreement
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+            <if test="map.signDate!=null">and sign_date &gt;= #{map.signDate}</if>
+            <if test="map.expirationDate!=null ">and expiration_date &lt;= #{map.expirationDate}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertOneManagementagreement" parameterType="managementagreement" useGeneratedKeys="true"
+            keyProperty="managementId">
+        insert into t_managementagreement(management_name,management_introduce,file_path,sign_date,expiration_date,group_id.sub_park_id,general_park_id,agreement_id)
+        values
+        (#{managementName,jdbcType=VARCHAR},#{managementIntroduce,jdbcType=VARCHAR},#{filePath,jdbcType=VARCHAR},#{signDate,jdbcType=VARCHAR},#{expirationDate,jdbcType=VARCHAR},#{groupId,jdbcType=INTEGER},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER}#{agreementId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneManagementagreement" parameterType="managementagreement">
+        update t_managementagreement
+        <trim prefix="set" suffixOverrides=",">
+            <if test="managementName!=null">management_name=#{managementName},</if>
+            <if test="managementIntroduce!=null">management_introduce=#{managementIntroduce},</if>
+            <if test="filePath!=null">file_path=#{filePath},</if>
+            <if test="signDate!=null">sign_date=#{signDate},</if>
+            <if test="expirationDate!=null">expiration_date=#{expirationDate},</if>
+            <if test="groupId!=null">group_id=#{groupId,jdbcType=INTEGER},</if>
+            <if test="subparkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+            <if test="agreementId!=null">agreement_id=#{agreementId},</if>
+        </trim>
+        where management_id=#{managementId}
+    </update>
+    <delete id="delectOneManagementagreement" parameterType="int">
+        delete from t_managementagreement where management_id=#{managementId}
+    </delete>
+</mapper>

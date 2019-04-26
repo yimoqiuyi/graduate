@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.WorkstylePictureMapper">
+    <resultMap id="getAllworkstylePicture" type="workstylePicture">
+        <id property="workStyleId" column="work_style_id"/>
+        <result property="workStyleName" column="work_style_name"/>
+        <result property="workStylePicture" column="work_style_picture"/>
+        <collection property="workPositionList" column="work_style_id" fetchType="lazy"
+                    select="com.yp.common.mapper.WorkPositionMapper.selectWorkPositionByworkStyleId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        work_style_id,work_style_name,work_style_picture
+    </sql>
+    <select id="selectOneWorkstylePictureById" parameterType="int" resultType="workstylePicture">
+        select
+        <include refid="Base_Column_List"/>
+        from t_workstylepicture
+        <where>
+            <if test="workStyleId!=null">and work_style_id=#{workStyleId}</if>
+        </where>
+    </select>
+    <select id="selectAllWorkstylePicture" resultMap="getAllworkstylePicture">
+        select
+        <include refid="Base_Column_List"/>
+        from t_workstylepicture
+    </select>
+    <select id="selectWorkstylePictureByworkId" parameterType="int" resultType="workstylePicture">
+        select w.work_style_id,w.work_style_name,w.work_style_picture from t_workstylepicture w,t_user u,t_workposition wp
+        where
+        u.work_id=#{workId}
+        and
+        u.work_id=wp.work_id
+        and
+        wp.work_style_id=w.work_style_id GROUP BY u.work_id
+    </select>
+    <insert id="insertOneWorkstylePicture" parameterType="workstylePicture" useGeneratedKeys="true"
+            keyProperty="workStyleId">
+        insert into t_workstylepicture(work_style_name,work_style_picture) values (#{workStyleName,jdbcType=VARCHAR},#{workStylePicture,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateOneWorkstylePicture" parameterType="workstylePicture">
+        update t_workstylepicture
+        <trim prefix="set" suffixOverrides=",">
+            <if test="workStyleName!=null">work_style_name=#{workStyleName},</if>
+            <if test="workStylePicture!=null">work_style_picture=#{workStylePicture},</if>
+        </trim>
+        where work_style_id=#{workStyleId}
+    </update>
+    <delete id="deleteOneWorkstylePictureById" parameterType="int">
+        delete from t_workstylepicture where work_style_id=#{workStyleId}
+    </delete>
+</mapper>

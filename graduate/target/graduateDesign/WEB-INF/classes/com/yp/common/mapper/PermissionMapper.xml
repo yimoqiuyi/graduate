@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.PermissionMapper">
+    <resultMap id="getAllpermission" type="permission">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="node" column="node"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,name,node
+    </sql>
+    <select id="selectOnePermissionById" parameterType="int" resultType="permission">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+        </where>
+    </select>
+
+    <select id="selectAllPermission" parameterType="int" resultMap="getAllpermission">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+    </select>
+
+    <select id="selectAllPermissionByRoleId" parameterType="int" resultMap="getAllpermission">
+        select
+        p.id,p.name,p.node
+        from t_permission p,t_role_permission rp where p.id=rp.permission_id and rp.role_id=#{id}
+    </select>
+    <select id="selectPermissionByLimit" parameterType="int" resultMap="getAllpermission">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission limit #{page},#{limit}
+    </select>
+    <select id="selctAllPermissionByUserId" parameterType="int" resultMap="getAllpermission">
+       select
+        p.id,p.name,p.node
+        from t_user u,t_role r,t_user_role ur,t_role_permission rp,t_permission p
+       where u.user_id=#{userId}
+       and u.user_id=ur.user_id
+       and r.role_id=ur.role_id
+       and r.role_id=rp.role_id
+       and p.id=rp.permission_id
+   </select>
+    <update id="updatePermission" parameterType="permission">
+        update t_permission
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">name=#{name}</if>
+            <if test="node!=null">node=#{node}</if>
+        </trim>
+        where id=#{id}
+    </update>
+    <insert id="insertPermission" parameterType="permission" useGeneratedKeys="true" keyProperty="id">
+        insert into t_permission(name,node) values
+        (#{name},#{node})
+    </insert>
+    <delete id="delectOnePermission" parameterType="int">
+        delete from t_permission where id=#{id}
+     </delete>
+</mapper>

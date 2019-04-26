@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.SoftwareMapper">
+    <resultMap id="getAllsoftware" type="software">
+        <id property="softId" column="soft_id"/>
+        <result property="softName" column="soft_name"/>
+        <result property="softPeopleMame" column="soft_people_name"/>
+        <result property="dateofAuthorization" column="dateof_authorization"/>
+        <result property="certificateNumber" column="certificate_number"/>
+        <result property="registrationNumber" column="registration_number"/>
+        <result property="softDocument" column="soft_document"/>
+        <result property="softGrade" column="soft_grade"/>
+        <result property="softwareAuditTime" column="software_audit_time"/>
+        <result property="softwareState" column="software_state"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="achievementsId" column="achievements_id"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+        <association property="achievements" column="achievements_id"
+                     select="com.yp.common.mapper.AchievementsMapper.selectAchievementsBysoftId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        soft_id,soft_name,soft_people_name,dateof_authorization,certificate_number,registration_number,soft_document,software_audit_time,soft_grade,
+        software_state,group_id,achievements_id,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOneSoftwareById" parameterType="int" resultMap="getAllsoftware">
+        select
+        <include refid="Base_Column_List"/>
+        from t_software
+        <where>
+            <if test="softId!=null">and soft_id=#{softId}</if>
+        </where>
+    </select>
+    <select id="selectSoftWaresByGroupId" parameterType="int" resultType="int">
+        select count(*) from t_software where group_id=#{_parameter}
+    </select>
+    <select id="selectAllSoftwareBygroupId" parameterType="int" resultMap="getAllsoftware">
+        select
+        <include refid="Base_Column_List"/>
+        from t_software
+        <where>
+            <if test="_parameter!=null">and group_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllSoftwareBysubParkId" parameterType="int" resultMap="getAllsoftware">
+        select
+        <include refid="Base_Column_List"/>
+        from t_software
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectAllSoftwareBygeneralParkId" parameterType="int" resultMap="getAllsoftware">
+        select
+        <include refid="Base_Column_List"/>
+        from t_software
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectSoftWareByGroupIdAndsoftwareState" parameterType="int" resultMap="getAllsoftware">
+        select
+        <include refid="Base_Column_List"/>
+        from t_software
+        <where>
+            <if test="groupId!=null">and group_id=#{groupId}</if>
+            <if test="softwareState!=null">and software_state=#{softwareState}</if>
+        </where>
+    </select>
+    <select id="selectSoftwareByLimit" parameterType="java.util.Map" resultMap="getAllsoftware">
+        select
+        <include refid="Base_Column_List"/>
+        from t_software
+        <where>
+            <if test="map.subParkId!=null">and sub_park_id=#{map.subParkId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+
+    <select id="selectSoftwareByGroupIdandLimit" parameterType="java.util.Map" resultMap="getAllsoftware">
+        select
+        <include refid="Base_Column_List"/>
+        from t_software
+        <where>
+            <if test="map.groupId!=null">and group_id=#{map.groupId}</if>
+        </where>
+        limit #{map.page},#{map.limit}
+    </select>
+    <insert id="insertOneSoftware" parameterType="software" useGeneratedKeys="true" keyProperty="softId">
+        insert into t_software(soft_name,soft_people_name,dateof_authorization,certificate_number,registration_number,soft_document,software_audit_time,
+        software_state,soft_grade,group_id,achievements_id,sub_park_id,general_park_id) values
+        (#{softName,jdbcType=VARCHAR},#{softPeopleMame,jdbcType=VARCHAR},#{dateofAuthorization,jdbcType=VARCHAR},#{certificateNumber,jdbcType=VARCHAR},#{registrationNumber,jdbcType=VARCHAR},#{softDocument,jdbcType=VARCHAR},#{softwareAuditTime,jdbcType=VARCHAR},
+        #{softwareState,jdbcType=INTEGER},#{softGrade,jdbcType=VARCHAR},#{groupId,jdbcType=INTEGER},#{achievementsId,jdbcType=INTEGER},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneSoftware" parameterType="software">
+        update t_software
+        <trim prefix="set" suffixOverrides=",">
+            <if test="softName!=null">soft_name=#{softName},</if>
+            <if test="softPeopleMame!=null">soft_people_name=#{softPeopleMame},</if>
+            <if test="dateofAuthorization!=null">dateof_authorization=#{dateofAuthorization},</if>
+            <if test="certificateNumber!=null">certificate_number=#{certificateNumber},</if>
+            <if test="registrationNumber!=null">registration_number=#{registrationNumber},</if>
+            <if test="softDocument!=null">soft_document=#{softDocument},</if>
+            <if test="softwareAuditTime!=null">software_audit_time=#{softwareAuditTime},</if>
+            <if test="softwareState!=null">software_state=#{softwareState},</if>
+            <if test="groupId!=null">group_id=#{groupId},</if>
+            <if test="achievementsId!=null">achievements_id=#{achievementsId},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where soft_id=#{softId}
+    </update>
+
+    <delete id="deleteOneSoftwareById" parameterType="int">
+        delete from t_software where soft_id=#{softId}
+    </delete>
+
+    <delete id="deleteSoftWareByAchievementsId" parameterType="int">
+        delete  from t_software where achievements_id=#{achievementsId}
+    </delete>
+</mapper>

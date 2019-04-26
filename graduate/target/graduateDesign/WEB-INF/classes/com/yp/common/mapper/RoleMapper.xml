@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.RoleMapper">
+    <resultMap id="getAllrole" type="role">
+        <id property="roleId" column="role_id"/>
+        <result property="name" column="name"/>
+        <result property="introduce" column="introduce"/>
+        <collection property="userList" column="id" fetchType="lazy"
+                    select="com.yp.common.mapper.UserMapper.selectUserByroleId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        role_id,name,introduce
+    </sql>
+    <select id="selectRoleByName" parameterType="String" resultType="role">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        <where>
+            <if test="name!=null">and name=#{name}</if>
+        </where>
+    </select>
+    <select id="selectOneRoleById" parameterType="int" resultType="role">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        <where>
+            <if test="id!=null">and role_id=#{id}</if>
+        </where>
+    </select>
+    <select id="selectRoleByUserId" parameterType="int" resultMap="getAllrole">
+        select
+         r.role_id,r.name,r.introduce
+        from t_role r,t_user_role ur
+        where
+        r.role_id=ur.role_id and ur.user_id=#{userId}
+    </select>
+    <select id="selectRoleByLimit" parameterType="int" resultMap="getAllrole">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role limit #{page},#{limit}
+     </select>
+    <select id="selectAllRoleById" parameterType="int" resultMap="getAllrole">
+        select r.role_id,r.name,r.introduce from t_role r,t_user_role ur,t_user u
+        where
+        u.user_id= #{id}
+        and
+        u.user_id=ur.user_id
+        and
+        r.role_id=ur.role_id
+     </select>
+    <select id="selectAllRole" resultMap="getAllrole">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+    </select>
+    <insert id="insertOneRole" parameterType="role" useGeneratedKeys="true" keyProperty="roleId">
+        insert into t_role(name,introduce) values
+        (#{name,jdbcType=VARCHAR},#{introduce,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateOneRole" parameterType="role">
+        update t_role
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name !=null">name=#{name},</if>
+            <if test="introduce !=null">introduce=#{introduce},</if>
+        </trim>
+        where role_id=#{id}
+    </update>
+    <delete id="delectOneRoleById" parameterType="int">
+        delete from t_role where role_id=#{id}
+    </delete>
+</mapper>

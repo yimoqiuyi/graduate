@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.RoomMapper">
+    <resultMap id="getAllroom" type="room">
+        <id property="roomId" column="room_id"/>
+        <result property="roomPosition" column="room_position"/>
+        <result property="roomPicture" column="room_picture"/>
+        <result property="stationNumber" column="station_number"/>
+        <result property="buildId" column="build_id" jdbcType="INTEGER"/>
+        <result property="subParkId" column="sub_park_id"/>
+        <result property="generalParkId" column="general_park_id"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        room_id,room_position,room_picture,station_number,build_id,sub_park_id,general_park_id
+    </sql>
+    <select id="selectOneRoomById" parameterType="int" resultType="room">
+        select
+        <include refid="Base_Column_List"/>
+        from t_room
+        <where>
+            <if test="roomId!=null">and room_id=#{roomId}</if>
+        </where>
+    </select>
+
+    <select id="selectAllRoomBysubParkId" parameterType="int" resultMap="getAllroom">
+        select
+        <include refid="Base_Column_List"/>
+        from t_room
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+
+    <select id="selectRoomByBuildId" parameterType="int" resultMap="getAllroom">
+        select
+        <include refid="Base_Column_List"/>
+        from t_room
+        <where>
+            <if test="_parameter!=null">and build_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="selectRoomBygeneralParkId" parameterType="int" resultMap="getAllroom">
+        select
+        <include refid="Base_Column_List"/>
+        from t_room
+        <where>
+            <if test="generalParkId!=null">and general_park_id=#{generalParkId}</if>
+        </where>
+    </select>
+    <select id="selectRoomByassetId" parameterType="int" resultMap="getAllroom">
+        select
+        <include refid="Base_Column_List"/>
+        from t_room
+        <where>
+            <if test="assetId!=null">and asset_id=#{assetId}</if>
+        </where>
+    </select>
+    <select id="selectRoomBySubParkId" parameterType="int" resultType="int">
+        select count(*) from t_room
+        <where>
+            <if test="_parameter!=null">and sub_park_id=#{_parameter}</if>
+        </where>
+    </select>
+    <select id="seletctRoomByLimit" parameterType="int" resultMap="getAllroom">
+        select
+        <include refid="Base_Column_List"/>
+        from t_room
+        <where>
+            <if test="subParkId!=null">and sub_park_id=#{subParkId} limit #{page},#{limit}</if>
+        </where>
+    </select>
+    <select id="selectRoomNumberByBuildId" parameterType="int" resultType="int">
+        select count(*) from t_room where build_id=#{buildId}
+    </select>
+    <insert id="insertOneRoom" parameterType="room" useGeneratedKeys="true" keyProperty="roomId">
+        insert into t_room(room_position,room_picture,station_number,build_id,sub_park_id,general_park_id)
+        values
+        (#{roomPosition,jdbcType=VARCHAR},#{roomPicture,jdbcType=VARCHAR},#{stationNumber,jdbcType=INTEGER},#{buildId,jdbcType=INTEGER},#{subParkId,jdbcType=INTEGER},#{generalParkId,jdbcType=INTEGER})
+    </insert>
+    <update id="updateOneRoom" parameterType="room">
+        update t_room
+        <trim prefix="set" suffixOverrides=",">
+            <if test="roomPosition!=null">room_position=#{roomPosition},</if>
+            <if test="roomPicture!=null">room_picture=#{roomPicture},</if>
+            <if test="stationNumber!=null">station_number=#{stationNumber},</if>
+            <if test="buildId!=null">build_id=#{buildId,jdbcType=INTEGER},</if>
+            <if test="subParkId!=null">sub_park_id=#{subparkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
+        </trim>
+        where room_id=#{roomId}
+    </update>
+    <delete id="deleteOneRoomById" parameterType="int">
+        delete from t_room where room_id=#{roomId}
+    </delete>
+    <delete id="deleteOneRoomBybuildId" parameterType="int">
+        delete from t_room where build_id=#{_parameter}
+    </delete>
+</mapper>

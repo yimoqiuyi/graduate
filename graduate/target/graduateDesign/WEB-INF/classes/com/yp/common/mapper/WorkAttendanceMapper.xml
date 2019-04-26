@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.WorkAttendanceMapper">
+    <resultMap id="getAllworkAttendance" type="workAttendance">
+        <id property="waId" column="wa_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="attendanceId" column="attendance_id"/>
+    </resultMap>
+
+
+    <insert id="insertOneWorkAttendance" parameterType="workAttendance" useGeneratedKeys="true" keyProperty="waId">
+      insert into t_workattendance(user_id,attendance_id) values (#{userId,jdbcType=INTEGER},#{attendanceId,jdbcType=INTEGER})
+  </insert>
+    <update id="updateOneWorkAttendance" parameterType="workAttendance">
+        update t_workattendance
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userId!=null">user_id=#{userId},</if>
+            attendance_id=#{attendanceId},
+        </trim>
+        where wa_id=#{waId}
+    </update>
+    <delete id="deleteOneWorkAttendanceById" parameterType="int">
+        delete from t_workattendance where wa_id=#{waId}
+    </delete>
+    <delete id="deleteWorkAttendacneByUserId" parameterType="int">
+        delete  from  t_workattendance where user_id=#{userId}
+    </delete>
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.common.mapper.AssessmentTableMapper">
+    <resultMap id="getAllassessmentTable" type="assessmentTable">
+        <id property="assessmentId" column="assessment_id" jdbcType="INTEGER"/>
+        <result property="patentNum" column="patent_num" jdbcType="INTEGER"/>
+        <result property="softwareNum" column="software_num" jdbcType="INTEGER"/>
+        <result property="paperNum" column="paper_num" jdbcType="INTEGER"/>
+        <result property="competitionNum" column="competition_num" jdbcType="INTEGER"/>
+        <result property="assessmentStartTime" column="assessment_start_time" jdbcType="VARCHAR"/>
+        <result property="assessmentEndTime" column="assessment_end_time" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <association property="group" column="group_id" select="com.yp.common.mapper.GroupMapper.selectOneGroupById"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        assessment_id,patent_num,software_num,paper_num,competition_num,assessment_start_time,assessment_end_time,group_id
+    </sql>
+    <select id="selectOneAssessmentTableByassessmentId" parameterType="int" resultType="assessmentTable">
+        select
+        <include refid="Base_Column_List"/>
+        from t_assessmenttable
+        <where>
+            <if test="assessmentId!=null and assessmentId!=''">
+                and assessment_id=#{assessmentId}
+            </if>
+        </where>
+    </select>
+    <select id="selectOneAssessmentTableByid" parameterType="int" resultType="assessmentTable">
+        select
+        <include refid="Base_Column_List"/>
+        from t_assessmenttable
+        <where>
+            <if test="_parameter !=null and _parameter !=''">
+             and group_id=#{_parameter}
+            </if>
+        </where>
+    </select>
+    <select id="selectAllAssessmentTable" resultMap="getAllassessmentTable">
+        select
+        <include refid="Base_Column_List"/>
+        from t_assessmenttable
+    </select>
+    <insert id="insertOneAssessmentTable" parameterType="assessmentTable" useGeneratedKeys="true"
+            keyProperty="assessmentId">
+        insert into t_assessmenttable(patent_num,software_num,paper_num,competition_num,assessment_start_time,assessment_end_time,group_id)
+        values
+        (#{patentNum},#{softwareNum},#{paperNum},#{competitionNum},#{assessmentStartTime},#{assessmentEndTime},#{groupId} )
+    </insert>
+    <update id="updateOneAssessmentTableByid" parameterType="assessmentTable">
+        update t_assessmenttable
+        <trim prefix="set" suffixOverrides=",">
+            <if test="assessmentId!=null">assessment_id=#{assessmentId},</if>
+            <if test="patentNum!=null">patent_num=#{patentNum},</if>
+            <if test="softwareNum!=null">software_num=#{softwareNum},</if>
+            <if test="paperNum!=null">paper_num=#{paperNum},</if>
+            <if test="competitionNum!=null">competition_num=#{competitionNum},</if>
+            <if test="groupId!=null">group_id=#{groupId},</if>
+            <if test="assessmentStartTime!=null">assessment_start_time=#{assessmentStartTime},</if>
+            <if test="assessmentEndTime!=null">assessment_end_time=#{assessmentEndTime},</if>
+        </trim>
+        where assessment_id=#{assessmentId}
+    </update>
+    <delete id="deleteOneAssessmentTableById" parameterType="int">
+        delete from  t_assessmenttable where assessment_id=#{assessmentId}
+    </delete>
+    <delete id="delectOneAssessmentTableByid" parameterType="int">
+       delete from t_assessmenttable where group_id=#{_parameter}
+   </delete>
+    <delete id="delectAllAssessmentTable">
+        delete  from  t_assessmenttable
+    </delete>
+</mapper>
