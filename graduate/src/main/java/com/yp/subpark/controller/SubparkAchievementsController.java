@@ -84,14 +84,15 @@ public class SubparkAchievementsController {
         return "view/common/RegistAchievement";
     }
 
-    @RequestMapping("insertToAchievement")
+
+
+    @RequestMapping("insertOneAchievement")
     @RequiresPermissions("role:insert")
-    private String InsertToAchievement(Achievements achievements) {
+    public String InsertOneAchievement(Achievements achievements) {
         achievementsService.insertAchievements(achievements);
         return "view/subpark/index";
     }
-
-    //获取团队成果
+     //获取团队成果
     @RequestMapping("getGroupAchievements")
     @RequiresPermissions("role:insert")
     public ModelAndView GetGroupAchievements(ModelAndView modelAndView, HttpServletRequest request) {

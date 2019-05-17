@@ -22,73 +22,68 @@
 <%
     User user = (User) request.getAttribute("user");
 %>
-<form class="layui-form" action="">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <input type="text" name="userId" hidden>
-        </div>
-    </div>
+<form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateGroupUser.do">
     <div class="layui-form-item">
         <label class="layui-form-label">用户名:</label>
         <div class="layui-input-block">
             <input type="text" name="userName" value="<%=user.getUserName()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">密码:</label>
         <div class="layui-input-block">
             <input type="text" name="userPwd" value="<%=user.getUserPwd()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">加入时间</label>
         <div class="layui-input-block">
             <input type="text" name="joinTime" value="<%=user.getJoinTime()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">离开时间</label>
         <div class="layui-input-block">
             <input type="text" name="awayTime" value="<%=user.getAwayTime()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">性别</label>
         <div class="layui-input-block">
             <input type="text" name="sex" value="<%=user.getSex()%>" required lay-verify="required" placeholder="请输入标题"
-                   autocomplete="off" class="layui-input">
+                   autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">年龄</label>
         <div class="layui-input-block">
             <input type="text" name="age" value="<%=user.getAge()%>" required lay-verify="required" placeholder="请输入标题"
-                   autocomplete="off" class="layui-input">
+                   autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">电话</label>
         <div class="layui-input-block">
             <input type="text" name="phone" value="<%=user.getPhone()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">身份证号</label>
         <div class="layui-input-block">
             <input type="text" name="cardNumber" value="<%=user.getCardNumber()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">邮件</label>
         <div class="layui-input-block">
             <input type="text" name="email" value="<%=user.getEmail()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
 
@@ -96,35 +91,35 @@
         <label class="layui-form-label">居住地址</label>
         <div class="layui-input-block">
             <input type="text" name="address" value="<%=user.getAddress()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">卫生得分</label>
         <div class="layui-input-block">
             <input type="text" name="sanitationScore" value="<%=user.getSanitationScore()%>" required
-                   lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">考勤得分</label>
         <div class="layui-input-block">
             <input type="text" name="attendanceScore" value="<%=user.getAttendanceScore()%>" required
-                   lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">工位利用率</label>
         <div class="layui-input-block">
             <input type="text" name="workRatio" value="<%=user.getWorkRatio()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">工位卫生状况</label>
         <div class="layui-input-block">
             <input type="text" name="workSanitation" value="<%=user.getWorkSanitation()%>" required
-                   lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
@@ -138,15 +133,14 @@
         <label class="layui-form-label">团队外键</label>
         <div class="layui-input-block">
             <input type="text" name="groupId" value="<%=user.getGroupId()%>" required lay-verify="required"
-                   placeholder="请输入标题" autocomplete="off" class="layui-input">
+                   placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
+    <input type="hidden" value="<%=user.getSubParkId()%>" name="subParkId">
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" type="submit" lay-filter="demo1">立即提交</button>
-        </div>
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" type="reset" lay-filter="demo1">撤返</button>
+            <input type="submit" value="提交" required lay-verify="required"
+                   autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
 

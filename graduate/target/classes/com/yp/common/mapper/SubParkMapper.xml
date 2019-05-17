@@ -7,7 +7,7 @@
         <id property="subParkId" column="sub_park_id"/>
         <result property="subParkName" column="sub_park_name"/>
         <result property="subParkIntroduce" column="sub_park_introduce"/>
-        <result property="subParkPhone" column="sub_park_introduce"/>
+        <result property="subParkPhone" column="sub_park_phone"/>
         <result property="subParkPicture" column="sub_park_picture"/>
         <result property="generalParkId" column="general_park_id"/>
         <result property="userId" column="user_id"/>
@@ -37,7 +37,7 @@
                     select="com.yp.common.mapper.PerformanceMapper.selectPerformanceBySubparkId"/>
     </resultMap>
     <sql id="Base_Column_List">
-        sub_park_id,sub_park_name,sub_park_introduce,sub_park_picture,general_park_id
+        sub_park_id,sub_park_name,sub_park_introduce,sub_park_phone,sub_park_picture,user_id,general_park_id
     </sql>
     <select id="selectOneSubParkById" parameterType="int" resultType="subPark">
         select
@@ -62,8 +62,8 @@
         </where>
     </select>
     <insert id="insertOneSubPark" parameterType="subPark" useGeneratedKeys="true" keyProperty="subParkId">
-      insert into t_subpark(sub_park_name,sub_park_introduce,sub_park_picture,general_park_id) values
-      (#{subParkName,jdbcType=VARCHAR},#{subParkIntroduce,jdbcType=VARCHAR},#{subParkPhone,jdbcType=VARCHAR},#{subParkPicture,jdbcType=VARCHAR},#{generalParkId,jdbcType=INTEGER})
+      insert into t_subpark(sub_park_name,sub_park_introduce,sub_park_picture,sub_park_introduce,general_park_id) values
+      (#{subParkName,jdbcType=VARCHAR},#{subParkIntroduce,jdbcType=VARCHAR},#{subParkPhone,jdbcType=VARCHAR},#{subParkPicture,jdbcType=VARCHAR},#{subParkPhone,jdbcType=VARCHAR}#{generalParkId,jdbcType=INTEGER})
     </insert>
     <update id="updateOneSubPark" parameterType="subPark">
         update t_subpark

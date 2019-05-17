@@ -188,8 +188,7 @@
                 //读取本地文件
                 obj.preview(function (index, file, result) {
                     filepathlist = result;
-                    alert(filepathlist);
-                    var tr = $(['<tr id="upload-' + index + '">'
+                     var tr = $(['<tr id="upload-' + index + '">'
                         , '<td>' + file.name + '</td>'
                         , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
                         , '<td>等待上传</td>'

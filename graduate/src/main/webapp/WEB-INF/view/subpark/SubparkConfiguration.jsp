@@ -78,22 +78,23 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateSubPark.do">
-                 <input type="hidden" name="subParkId" value="<%=subPark.getSubParkId()%>"  >
+            <form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateSubpark.do">
+                <input type="hidden" name="subParkId" value="<%=subPark.getSubParkId()%>">
                 <input type="hidden" name="generalParkId" value="<%=subPark.getGeneralParkId()%>">
-                 <div class="layui-form-item">
+                <div class="layui-form-item">
                     <label class="layui-form-label">分园区名称:</label>
                     <div class="layui-input-block">
                         <input type="text" name="subparkName" style="width: 100px" value="<%=subPark.getSubParkName()%>"
-                               required lay-verify="required" placeholder="名称" autocomplete="off" class="layui-input">
+                               required lay-verify="required" placeholder="名称" autocomplete="off" class="layui-input"
+                               readonly>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">联系电话:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="subParkPhone" style="width: 100px"
+                        <input type="text" name="subParkPhone" style="width: 200px"
                                value="<%=subPark.getSubParkPhone()%>" required lay-verify="required" placeholder="电话"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
 
@@ -101,11 +102,11 @@
                     <label class="layui-form-label">分园区介绍:</label>
                     <div class="layui-input-block">
                         <textarea name="subParkIntroduce"
-                                  class="layui-input"><%=subPark.getSubParkIntroduce()%></textarea>
+                                  class="layui-input" readonly><%=subPark.getSubParkIntroduce()%></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <div class="layui-input-block">
+                    <div class="layui-input-block" style="width: 200px">
                         <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo">修改</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>

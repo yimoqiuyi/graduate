@@ -8,8 +8,10 @@
         <result property="userId" column="user_id"/>
         <result property="attendanceId" column="attendance_id"/>
     </resultMap>
-
-
+   
+   <select id="selectAllWorkAttendanceByAttendanceId" parameterType="int" resultMap="getAllworkAttendance">
+       select * from t_workattendance where attendance_id=#{attendanceId};
+   </select>
     <insert id="insertOneWorkAttendance" parameterType="workAttendance" useGeneratedKeys="true" keyProperty="waId">
       insert into t_workattendance(user_id,attendance_id) values (#{userId,jdbcType=INTEGER},#{attendanceId,jdbcType=INTEGER})
   </insert>

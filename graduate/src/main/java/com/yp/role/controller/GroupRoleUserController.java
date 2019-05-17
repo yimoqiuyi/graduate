@@ -9,9 +9,12 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 //团队成员，角色
@@ -51,13 +54,6 @@ public class GroupRoleUserController {
     @RequestMapping("updateUser")
     @RequiresPermissions(value = "user:insert")
     public String updateUser(User user) {
-        Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession();
-        User user1 = (User) session.getAttribute("user");
-        int groupId = user1.getGroupId();
-        Group group = groupService.selectOneGroupById(groupId);
-        user.setGroupId(groupId);
-        user.setSubParkId(group.getSubParkId());
         userService.updateOneUser(user);
         return "view/group/index";
     }
@@ -84,27 +80,36 @@ public class GroupRoleUserController {
         user.setState(1);
         user.setGroupId(groupId);
         user.setSubParkId(1);  //注册队员都为同队同分园区的人
-         userService.insertOneUser(user);
+        userService.insertOneUser(user);
         return "view/user/index";
     }
 
-    @RequestMapping("updateuser")
-    @RequiresPermissions(value = "user:insert")
-    public ModelAndView UpdateUser(ModelAndView modelAndView, HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("id"));
-        User user = userService.selectOneUserById(userId);
-        modelAndView.addObject("user", user); //用户
-        modelAndView.setViewName("view/group/updateUser");
-        return modelAndView;
-    }
+//    @RequestMapping("updateuser")
+//    @RequiresPermissions(value = "user:insert")
+//    public ModelAndView UpdateUser(ModelAndView modelAndView, HttpServletRequest request) {
+//        int userId = Integer.parseInt(request.getParameter("id"));
+//        User user = userService.selectOneUserById(userId);
+//        modelAndView.addObject("user", user); //用户
+//        modelAndView.setViewName("view/group/updateUser");
+//        return modelAndView;
+//    }
 
     @RequestMapping("deleteuser")
     @RequiresPermissions(value = "user:delete")
     public String DeleteUser(HttpServletRequest request) {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String awayTime = simpleDateFormat.format(date);
         int userId = Integer.parseInt(request.getParameter("userId"));
         User user = userService.selectOneUserById(userId);
         user.setState(0);
+        user.setAwayTime(awayTime);
+        int workId = user.getWorkId();
         userService.updateOneUser(user);
+        WorkPosition workPosition = workPositionService.selectOneWorkPositionById(workId);
+        workPosition.setWorkId(0);
+        workPosition.setWorkState(0);
+        workPositionService.updateOneWorkPosition(workPosition); //将工位设置为可用工位
         return "view/group/index";
-     }
+    }
 }

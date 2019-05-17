@@ -23,11 +23,7 @@
     User user = (User) request.getAttribute("user");
 %>
 <form class="layui-form" action="">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
             <input type="text" name="userId" hidden>
-        </div>
-    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">用户名:</label>
         <div class="layui-input-block">

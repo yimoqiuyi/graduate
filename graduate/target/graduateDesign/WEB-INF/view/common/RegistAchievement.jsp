@@ -63,7 +63,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <form class="layui-form" action="${pageContext.request.contextPath}/subpark/insertToAchievement.do">
+            <form class="layui-form" action="${pageContext.request.contextPath}/subpark/insertOneAchievement.do" lay-filter="example">
                  <div class="layui-form-item">
                     <label class="layui-form-label">成果名字:</label>
                     <div class="layui-input-block">

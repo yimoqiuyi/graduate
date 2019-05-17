@@ -57,8 +57,6 @@
     </c:if>
      <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;"><a href="${pageContext.request.contextPath}/subpark/insertAchievement.do"
-                                       class="layui-btn layui-btn-normal">添加</a></div>
         <div style="padding: 15px;">
             <table class="layui-table" lay-even lay-skin="nob">
                 <colgroup>
@@ -80,7 +78,7 @@
                     <th>加入时间</th>
                     <th>离开时间</th>
                     <th>卫生得分</th>
-                    <th>工位状态</th>
+                    <th>卫生状态</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -98,9 +96,9 @@
                         <td>${item.state}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/subpark/selectUserSanitation.do?userId=${item.userId}"
-                               class="layui-btn layui-btn-warm">查看</a>
+                               class="layui-btn layui-btn-sm layui-btn-normal">查看</a>
                             <a href="${pageContext.request.contextPath}/subpark/deleteUserSanitation.do?userId=${item.userId}"
-                               class="layui-btn layui-btn-warm">删除</a>
+                               class="layui-btn  layui-btn-sm layui-btn-danger">复原</a>
                         </td>
                     </tr>
                 </c:forEach>

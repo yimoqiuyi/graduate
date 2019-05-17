@@ -8,6 +8,8 @@ import java.util.List;
 //工位对应考勤操作
 public interface WorkAttendanceMapper {
 
+    public List<WorkAttendance> selectAllWorkAttendanceByAttendanceId(@Param("attendanceId") int attendanceId);
+
     //用户-考勤录入
     public boolean insertOneWorkAttendance(WorkAttendance workAttendance);
 

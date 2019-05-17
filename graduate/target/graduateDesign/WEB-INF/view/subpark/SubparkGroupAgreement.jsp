@@ -125,7 +125,7 @@
                             <td>${item.signDate}</td>
                             <td>${item.expirationDate}</td>
                             <td><a href="${pageContext.request.contextPath}/group/AdmissioncontractDownload.do?admissionId=${item.admissionId}"
-                                   class="layui-btn layui-btn-warm">下载</a></td>
+                                   class="layui-btn  layui-btn-normal">下载</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -68,7 +68,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateAssessmentTable.do"
+            <form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateOnePerformance.do"
                   method="post">
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -79,14 +79,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">绩效分数:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="patentNum" value="<%=performance.getPerformanceScore()%>" required
+                        <input type="text" name="performanceScore" value="<%=performance.getPerformanceScore()%>" required
                                lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">团队名称:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="softwareNum" value="<%=performance.getGroupName()%>" required
+                        <input type="text" name="groupName" value="<%=performance.getGroupName()%>" required
                                lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                 </div>
                 <input type="text" name="groupId" value="<%=performance.getGroupId()%>" hidden>
                 <input type="text" name="subParkId" value="<%=performance.getSubParkId()%>" hidden>
-                <input type="text" name="generealParkId" value="<%=performance.getGeneralParkId()%>" hidden>
+                <input type="text" name="generalParkId" value="<%=performance.getGeneralParkId()%>" hidden>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo">提交</button>

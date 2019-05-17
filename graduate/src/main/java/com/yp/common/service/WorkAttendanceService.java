@@ -3,7 +3,11 @@ package com.yp.common.service;
 import com.yp.common.pojo.WorkAttendance;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface WorkAttendanceService {
+
+    public List<WorkAttendance> selectAllWorkAttendanceByAttendanceId(@Param("attendanceId") int attendanceId);
     //ÓÃ»§-¿¼ÇÚÂ¼Èë
     public boolean insertOneWorkAttendance(WorkAttendance workAttendance);
 

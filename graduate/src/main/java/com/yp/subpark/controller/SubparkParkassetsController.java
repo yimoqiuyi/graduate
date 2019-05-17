@@ -68,18 +68,17 @@ public class SubparkParkassetsController {
     @RequiresPermissions("role:insert")
     public ModelAndView SelectRoomParkassets(ModelAndView modelAndView, HttpServletRequest request){
         int roomId=Integer.parseInt(request.getParameter("roomId"));
+        Parkassets parkassets=parkassetsService.selectOneParkassetsByroomId(roomId);
         modelAndView.addObject("roomId",roomId);
-        List<Parkassets> parkassetsList=parkassetsService.selectAllParkassets();
-     for(Parkassets parkassets:parkassetsList){
-         if(parkassets.getRoomId()==roomId){
-              modelAndView.setViewName("view/subpark/error");
-              return modelAndView;
-         }
-     }
-        modelAndView.setViewName("view/subpark/RoomParkassets");
+         if(parkassets==null){
+            modelAndView.setViewName("view/subpark/insertParkassets");
+        }else{
+            modelAndView.addObject("parkassets",parkassets);
+            modelAndView.setViewName("view/subpark/parkassets");
+        }
         return modelAndView;
     }
-    @RequestMapping("insertParkassets")
+    @RequestMapping("checkSubparkinsertParkassets")
     @RequiresPermissions("role:insert")
     public String InsertParkassets(Integer roomId,Parkassets parkassets){
         parkassets.setRoomId(roomId);
@@ -89,7 +88,7 @@ public class SubparkParkassetsController {
     @RequestMapping("updateRoomParkassets")
     @RequiresPermissions("role:insert")
     public ModelAndView UpdateRoomParkassets(ModelAndView modelAndView,HttpServletRequest request){
-        Parkassets parkassets=parkassetsService.selectOneParkassetsByid(Integer.parseInt(request.getParameter("roomId")));
+        Parkassets parkassets=parkassetsService.selectOneParkassetsByroomId(Integer.parseInt(request.getParameter("roomId")));
         modelAndView.addObject("parkassets",parkassets);
         modelAndView.setViewName("view/subpark/parkassets");
         return modelAndView;

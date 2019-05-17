@@ -52,15 +52,6 @@ public class SubparkConfigurationController {
         modelAndView.setViewName("view/subpark/SubparkConfiguration");
         return modelAndView;
     }
-
-    //修改分园区信息
-    @RequestMapping("updateSubPark")
-    @RequiresPermissions("role:insert")
-    public String insertsubPark(SubPark subPark) {
-        subParkService.updateOneSubPark(subPark);
-        return "redirect:insertConfiguration.do";
-    }
-
     @RequestMapping("selectBuilding")
     @RequiresPermissions("role:insert")
     public ModelAndView insertBuilding(ModelAndView modelAndView) {

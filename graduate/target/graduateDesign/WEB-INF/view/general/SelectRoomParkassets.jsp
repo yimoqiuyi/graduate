@@ -57,7 +57,6 @@
             <li class="layui-nav-item"><a
                     href="${pageContext.request.contextPath}/general/checkSubpark.do?subParkId=${subParkId}">园区信息</a>
             </li>
-        </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">

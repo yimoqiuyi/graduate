@@ -12,6 +12,12 @@ import java.util.List;
 public class WorkhealthServiceImpl implements WorkhealthService {
 @Autowired
 private WorkhealthMapper workhealthMapper;
+
+    @Override
+    public List<Workhealth> selectAllWorkhealthBysId(int sId) {
+        return workhealthMapper.selectAllWorkhealthBysId(sId);
+    }
+
     @Override
     public boolean insertOneWorkhealth(Workhealth workhealth) {
         return workhealthMapper.insertOneWorkhealth(workhealth);

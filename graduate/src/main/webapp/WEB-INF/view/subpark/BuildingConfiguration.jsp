@@ -27,15 +27,24 @@
             <!-- 头部区域（可配合layui已有的水平导航） -->
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item"><a href="">首页</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/insertConfiguration.do">园区配置</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/GroupManagement.do">团队管理</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/selectBuildings.do">资产管理</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/subparkAttendance.do">考勤管理</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/subparkSanitation.do">卫生管理</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/checkCertificate.do">团队证书</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/selectPerformance.do">绩效管理</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/subparkAgreement.do">园区合同</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/checkSubpark.do">园区信息</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/insertConfiguration.do">园区配置</a>
+                </li>
+                <li class="layui-nav-item"><a
+                        href="${pageContext.request.contextPath}/subpark/GroupManagement.do">团队管理</a></li>
+                <li class="layui-nav-item"><a
+                        href="${pageContext.request.contextPath}/subpark/selectBuildings.do">资产管理</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/subparkAttendance.do">考勤管理</a>
+                </li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/subparkSanitation.do">卫生管理</a>
+                </li>
+                <li class="layui-nav-item"><a
+                        href="${pageContext.request.contextPath}/subpark/checkCertificate.do">团队证书</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/selectPerformance.do">绩效管理</a>
+                </li>
+                <li class="layui-nav-item"><a
+                        href="${pageContext.request.contextPath}/subpark/subparkAgreement.do">园区合同</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/subpark/checkSubpark.do">园区信息</a>
+                </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -90,15 +99,15 @@
                 <tbody>
                 <c:forEach items="${buildingList}" var="item">
                     <tr>
-                        <td>${item.buildId}</td>buildId
+                        <td>${item.buildId}</td>
                         <td>${item.roomNumber}</td>
                         <td>${item.buildStation}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/subpark/AddRoom.do?buildId=${item.buildId}"
-                               class="layui-btn layui-btn-warm">增加</a>
+                               class="layui-btn layui-btn-warm layui-btn-sm">增加</a>
                             <a href="${pageContext.request.contextPath}/subpark/deleteRoom.do?buildId=${item.buildId}"
-                               class="layui-btn layui-btn-warm">删出所有</a>
-                         </td>
+                               class="layui-btn  layui-btn-danger layui-btn-sm">删出所有</a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

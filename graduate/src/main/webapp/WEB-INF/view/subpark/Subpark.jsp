@@ -80,7 +80,7 @@
                         <div class="layui-input-block">
                             <input type="text" name="userPwd" value="<%=subPark.getSubParkName()%>" required
                                    lay-verify="required"
-                                   placeholder="名称" autocomplete="off" class="layui-input"  >
+                                   placeholder="名称" autocomplete="off" class="layui-input"  readonly>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -88,14 +88,14 @@
                         <div class="layui-input-block">
                             <input type="text" name="joinTime" value="<%=subPark.getSubParkPhone()%>" required
                                    lay-verify="required"
-                                   placeholder="电话" autocomplete="off" class="layui-input"  >
+                                   placeholder="电话" autocomplete="off" class="layui-input"  readonly>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">分园区介绍</label>
                         <div class="layui-input-block">
                             <textarea name="subparkIntroduce" placeholder="分园区介绍" class="layui-textarea"
-                                       ><%=subPark.getSubParkIntroduce()%></textarea>
+                                      readonly   ><%=subPark.getSubParkIntroduce()%></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item" style="width: 200px">

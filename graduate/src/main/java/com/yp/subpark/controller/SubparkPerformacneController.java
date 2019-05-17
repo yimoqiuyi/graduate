@@ -106,7 +106,7 @@ public class SubparkPerformacneController {
     @RequestMapping("insertToPerformance")
     @RequiresPermissions("role:insert")
     public String InsertToPerformance(Performance performance) {
-        performanceService.insertPerformance(performance);
+        performanceService.updatePerformance(performance);
         return "view/subpark/index";
     }
 

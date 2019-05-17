@@ -56,11 +56,8 @@
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
                 <form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateToSubpark.do" enctype="multipart/form-data" method="POST">
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <input type="hidden" name="subParkId" value="<%=subPark.getSubParkId()%>" >
-                        </div>
-                    </div>
+                             <input type="hidden" name="subParkId" value="<%=subPark.getSubParkId()%>" >
+
                      <div class="layui-form-item">
                         <label class="layui-form-label">分园区名称:</label>
                         <div class="layui-input-block">

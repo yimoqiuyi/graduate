@@ -1,14 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
   User: yang
-  Date: 2019-04-13
-  Time: 13:51
+  Date: 2019-04-09
+  Time: 19:19
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
          pageEncoding="utf-8" import="com.yp.common.pojo.*,java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,9 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
 </head>
 <body class="layui-layout-body">
-<%
-    String groupId = String.valueOf(request.getAttribute("groupId"));
-%>
+
 <c:if test="${ empty sessionScope.user}">
     <li><a href="login.jsp">登录</a></li>
 </c:if>
@@ -55,55 +52,54 @@
             </ul>
         </div>
     </c:if>
-     <div class="layui-body">
+    <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <table class="layui-table" lay-even lay-skin="nob">
-                <colgroup>
-                    <col width="100">
-                    <col width="100">
-                    <col width="100">
-                    <col width="120">
-                    <col width="120">
-                    <col width="120">
-                    <col width="120">
-                    <col width="120">
-                    <col width="140">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>姓名</th>
-                    <th>性别</th>
-                    <th>加入时间</th>
-                    <th>离开时间</th>
-                    <th>卫生得分</th>
-                    <th>卫生状态</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${userList}" var="item">
-                    <tr>
-                        <td>${item.userId}</td>
-                        <td>${item.userName}</td>
-                        <td>${item.sex}</td>
-                        <td>${item.joinTime}</td>
-                        <td>${item.awayTime}</td>
-                        <td>${item.sanitationScore}</td>
-                        <td>${item.workSanitation}</td>
-                        <td>${item.state}</td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/subpark/selectUserSanitation.do?userId=${item.userId}"
-                               class="layui-btn layui-btn-sm layui-btn-normal">查看</a>
-                            <a href="${pageContext.request.contextPath}/subpark/deleteUserSanitation.do?userId=${item.userId}"
-                               class="layui-btn  layui-btn-sm layui-btn-danger">复原</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            <form class="layui-form" action="${pageContext.request.contextPath}/subpark/checkSubparkinsertParkassets.do">
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">桌子数量:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tableNum" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">椅子数量:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="chairNum"  required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">空调数量:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="airconditioningNum"   required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">窗帘数量:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="curtainNum"   required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">饮水机数量:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="WaterdispenserNum"   required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电插板数量:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="electricboardNum"    required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                        <input type="text" name="roomId"  value="${roomId}"  hidden>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo">修改</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
 
         </div>
     </div>

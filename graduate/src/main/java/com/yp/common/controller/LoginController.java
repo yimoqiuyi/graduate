@@ -90,7 +90,7 @@ public class LoginController {
         }
         //µÇÂ¼Ê§°Ü£¬Ìø×ªµ½loginÒ³Ãæ
         model.addAttribute("error", error);
-        return "error";
+        return "login";
     }
 
     @RequestMapping(value = "index")

@@ -1,10 +1,7 @@
 package com.yp.subpark.controller;
 
 import com.yp.common.pojo.User;
-import com.yp.common.service.GroupService;
-import com.yp.common.service.RoomService;
-import com.yp.common.service.UserService;
-import com.yp.common.service.WorkPositionService;
+import com.yp.common.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +21,12 @@ public class SubparkGroupUserController {
     private RoomService roomService;
     @Autowired
     private WorkPositionService workPositionService;
-
+   @Autowired
+   private WorkhealthService workhealthService;
+   @Autowired
+   private RoleService roleService;
+   @Autowired
+   private UserRoleService userRoleService;
     @RequestMapping("selectGroupUser")
     @RequiresPermissions("role:insert")
     public ModelAndView SelectGroupUser(ModelAndView modelAndView, HttpServletRequest request) {
@@ -46,6 +48,10 @@ public class SubparkGroupUserController {
     @RequiresPermissions("role:insert")
     public String DeleteGroupUser(HttpServletRequest request) {
         int userId = Integer.parseInt(request.getParameter("userId"));
+        User user=userService.selectOneUserById(userId);
+         workhealthService.deleteWorkHealthByUserId(userId);
+         workPositionService.deleteOneWorkPositionById(user.getWorkId());
+         userRoleService.deleteUserroleByUserId(userId);
         userService.deleteOneUserById(userId);
         return "view/subpark/index";
     }

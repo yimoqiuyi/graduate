@@ -97,7 +97,7 @@
                             <a href="${pageContext.request.contextPath}/subpark/selectGroupUser.do?userId=${item.userId}"
                                class="layui-btn layui-btn-sm layui-btn-normal">查看</a>
                             <a href="${pageContext.request.contextPath}/subpark/deleteUserAttendance.do?userId=${item.userId}"
-                               class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                               class="layui-btn layui-btn-sm layui-btn-danger">复原</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -105,8 +105,6 @@
             </table>
 
         </div>
-    </div>
-
     <div class="layui-footer">
         <!-- 底部固定区域 -->
         © layui.com - 底部固定区域

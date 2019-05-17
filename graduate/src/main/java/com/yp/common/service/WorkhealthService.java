@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface WorkhealthService {
+    public List<Workhealth> selectAllWorkhealthBysId(@Param("sId") int sId);
+
     //工位卫生录入
     public boolean insertOneWorkhealth(Workhealth workhealth);
 

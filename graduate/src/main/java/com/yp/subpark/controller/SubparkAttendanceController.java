@@ -2,9 +2,7 @@ package com.yp.subpark.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yp.common.pojo.Attendance;
-import com.yp.common.pojo.Group;
-import com.yp.common.pojo.User;
+import com.yp.common.pojo.*;
 import com.yp.common.service.*;
 import com.yp.subpark.jsonUtil.GroupToJson;
 import org.apache.shiro.SecurityUtils;
@@ -101,6 +99,16 @@ public class SubparkAttendanceController {
     @RequestMapping("deleteAttendance")
     @RequiresPermissions("role:insert")
     public String DeleteAttendance(HttpServletRequest request){
+//        List<WorkAttendance> workAttendanceList = workAttendanceService.selectAllWorkAttendanceByAttendanceId(Integer.parseInt(request.getParameter("attendanceId")));
+//        Attendance attendance = attendanceService.selectOneAttendanceById(Integer.parseInt(request.getParameter("attendanceId")));
+//        int attendatceScore = attendance.getAttendanceScore();
+//        User user = null;
+//        for (WorkAttendance workAttendance : workAttendanceList) {
+//            user = userService.selectOneUserById(workAttendance.getUserId()); //查询用户
+//            user.setAttendanceScore(user.getAttendanceScore() + attendatceScore); //修改用户卫生得分
+//            workAttendanceService.deleteWorkAttendacneByUserId(user.getUserId());  //删除用户卫生对应关系
+//            userService.updateOneUser(user); //修改用户
+//        }
         attendanceService.delectOneAttendanceByid(Integer.parseInt(request.getParameter("attendanceId")));
         return "redirect:attendanceOperation.do";
     }

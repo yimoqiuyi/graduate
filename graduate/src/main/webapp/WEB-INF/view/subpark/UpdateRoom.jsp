@@ -73,14 +73,14 @@
                     <input type="hidden" name="subParkId" value="<%=room.getSubParkId()%>" class="layui-input">
                     <input type="hidden" name="generalParkId" value="<%=room.getGeneralParkId()%>" class="layui-input">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">房间位置</label>
+                        <label class="layui-form-label">房间位置:</label>
                         <div class="layui-input-block">
                             <input type="text" id="roomPosition" value="<%=room.getRoomPosition()%>"
                                    name="roomPosition">
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">工位数</label>
+                        <label class="layui-form-label">工位数:</label>
                         <div class="layui-input-block">
                             <input type="text" name="stationNumber" style="width: 100px"
                                    required lay-verify="required" placeholder="工位数" value="<%=room.getStationNumber()%>"
@@ -88,32 +88,32 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">分园区</label>
+                        <label class="layui-form-label">分园区:</label>
                         <div class="layui-input-block">
                             <input type="text" id="subparkName" value="<%=subPark.getSubParkName()%>"
-                                   name="subparkName">
+                                   name="subparkName" readonly>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">分园区介绍</label>
+                        <label class="layui-form-label">分园区介绍:</label>
                         <div class="layui-input-block">
                             <input type="text" id="subparkIntroduce" value="<%=subPark.getSubParkIntroduce()%>"
-                                   name="subparkIntroduce">
+                                   name="subparkIntroduce" readonly>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">总园区</label>
+                        <label class="layui-form-label">总园区:</label>
                         <div class="layui-input-block">
-                            <input type="text" value="<%=generalPark.getGeneralName()%>" name="generalName">
+                            <input type="text" value="<%=generalPark.getGeneralName()%>" name="generalName" readonly>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">总园区介绍</label>
+                        <label class="layui-form-label">总园区介绍:</label>
                         <div class="layui-input-block">
-                            <textarea name="generalIntroduce"><%=generalPark.getGeneralIntroduce()%></textarea>
+                            <textarea name="generalIntroduce" readonly><%=generalPark.getGeneralIntroduce()%></textarea>
                         </div>
                     </div>
-
+             <input type="hidden" name="buildId" value="<%=room.getBuildId()%>">
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo">修改</button>

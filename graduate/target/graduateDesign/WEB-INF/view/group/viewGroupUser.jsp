@@ -24,11 +24,7 @@
 %>
 
 <form class="layui-form" action="${pageContext.request.contextPath}/role/updateUser.do">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <input type="text" name="userId" hidden>
-        </div>
-    </div>
+    <input type="text" name="userId" value="<%=user.getUserId()%>" hidden>
     <div class="layui-form-item">
         <label class="layui-form-label">用户名:</label>
         <div class="layui-input-block">
@@ -44,49 +40,49 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">加入时间</label>
+        <label class="layui-form-label">加入时间:</label>
         <div class="layui-input-block">
             <input type="text" name="joinTime" value="<%=user.getJoinTime()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">离开时间</label>
+        <label class="layui-form-label">离开时间:</label>
         <div class="layui-input-block">
             <input type="text" name="awayTime" value="<%=user.getAwayTime()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
+        <label class="layui-form-label">性别:</label>
         <div class="layui-input-block">
             <input type="text" name="sex" value="<%=user.getSex()%>" required lay-verify="required" placeholder="请输入标题"
                    autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">年龄</label>
+        <label class="layui-form-label">年龄:</label>
         <div class="layui-input-block">
             <input type="text" name="age" value="<%=user.getAge()%>" required lay-verify="required" placeholder="请输入标题"
                    autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">电话</label>
+        <label class="layui-form-label">电话:</label>
         <div class="layui-input-block">
             <input type="text" name="phone" value="<%=user.getPhone()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">身份证号</label>
+        <label class="layui-form-label">身份证号:</label>
         <div class="layui-input-block">
             <input type="text" name="cardNumber" value="<%=user.getCardNumber()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">邮件</label>
+        <label class="layui-form-label">邮件:</label>
         <div class="layui-input-block">
             <input type="text" name="email" value="<%=user.getEmail()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input">
@@ -94,54 +90,52 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">居住地址</label>
+        <label class="layui-form-label">居住地址:</label>
         <div class="layui-input-block">
             <input type="text" name="address" value="<%=user.getAddress()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">卫生得分</label>
+        <label class="layui-form-label">卫生得分:</label>
         <div class="layui-input-block">
             <input type="text" name="sanitationScore" value="<%=user.getSanitationScore()%>" required
                    lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">考勤得分</label>
+        <label class="layui-form-label">考勤得分:</label>
         <div class="layui-input-block">
             <input type="text" name="attendanceScore" value="<%=user.getAttendanceScore()%>" required
                    lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">工位利用率</label>
+        <label class="layui-form-label">工位利用率:</label>
         <div class="layui-input-block">
             <input type="text" name="workRatio" value="<%=user.getWorkRatio()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">工位卫生状况</label>
+        <label class="layui-form-label">工位卫生状况:</label>
         <div class="layui-input-block">
             <input type="text" name="workSanitation" value="<%=user.getWorkSanitation()%>" required
                    lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">工位外键</label>
+        <label class="layui-form-label">工位外键:</label>
         <div class="layui-input-block">
             <input type="text" name="workId" value="<%=user.getWorkId()%>" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input" readonly>
         </div>
     </div>
     <input type="hidden" name="subParkId" value="<%=user.getSubParkId()%>">
-
-    <div class="layui-form-item" style="width: 150px">
-        <div class="layui-input-block">
+    <input type="hidden" name="groupId" value="<%=user.getGroupId()%>">
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="width: 150px">
             <button class="layui-btn" lay-submit="" type="submit" lay-filter="demo1">提交</button>
-        </div>
-        <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" type="reset" lay-filter="demo1">撤返</button>
         </div>
     </div>
@@ -149,7 +143,7 @@
 <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
 <script>
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
 
     });

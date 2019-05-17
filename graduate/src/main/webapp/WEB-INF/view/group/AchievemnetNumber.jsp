@@ -57,7 +57,7 @@
     </c:if>
      <div class="layui-body">
         <!-- 内容主体区域 -->
-         <div style="padding: 15px;">
+         <div style="padding: 15px;" title="团队成就">
              <form class="layui-form" action="">
                  <div class="layui-form-item">
                      <label class="layui-form-label">专利数量</label>
@@ -85,7 +85,7 @@
                  </div>
               </form>
         </div>
-         <div style="padding: 15px;">
+         <div style="padding: 15px;" title="团队任务">
              <form class="layui-form" action="">
                  <div class="layui-form-item">
                      <label class="layui-form-label">专利数</label>

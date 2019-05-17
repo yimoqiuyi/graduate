@@ -37,9 +37,9 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="userRoleName!=null">user_role_name=#{userRoleName},</if>
             <if test="userId!=null">user_id=#{userId},</if>
-            <if test="roleId=!null">role_id=#{roleId},</if>
+            <if test="roleId!=null">role_id=#{roleId},</if>
         </trim>
-        where id=#{id}
+        where id=#{id,jdbcType=INTEGER}
     </update>
     <delete id="deleteOneUserRoleById" parameterType="int">
         delete from t_user_role where id=#{id}

@@ -174,7 +174,7 @@
                 var data = obj.data //获得当前行数据
                     , layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'detail'){
-                    window.location.href = "${pageContext.request.contextPath}/subpark/groupAttendance.do?groupId=" + data.groupId
+                    window.location.href = "${pageContext.request.contextPath}/subpark/groupSanitation.do?groupId=" + data.groupId
                     layer.msg('查看操作');
                 }
             });

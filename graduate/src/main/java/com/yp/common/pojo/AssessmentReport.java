@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class AssessmentReport implements Serializable {
     private int reportId;//
-    private String assessmentMessage;//任务情况描述4
+    private String assessmentMessage;//任务情况描述
     private String sDescription;//卫生情况描述
     private String attendanceDescription;//考勤情况描述
     private int groupId;//团队外键

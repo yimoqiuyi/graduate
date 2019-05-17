@@ -40,4 +40,14 @@ public class User_Role implements Serializable {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "User_Role{" +
+                "id=" + id +
+                ", userRoleName='" + userRoleName + '\'' +
+                ", userId=" + userId +
+                ", roleId=" + roleId +
+                '}';
+    }
 }

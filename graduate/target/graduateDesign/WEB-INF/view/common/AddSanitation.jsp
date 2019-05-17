@@ -25,14 +25,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">卫生类别:</label>
         <div class="layui-input-block">
-            <input type="text" name="attendanceCategory" lay-verify="title" autocomplete="off" placeholder="请输入类别"
+            <input type="text" name="sanitationCategory" lay-verify="title" autocomplete="off" placeholder="请输入类别"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">卫生分数:</label>
         <div class="layui-input-block">
-            <input type="text" name="attendanceScore" lay-verify="title" autocomplete="off" placeholder="请输入分数"
+            <input type="text" name="sanitationScore" lay-verify="title" autocomplete="off" placeholder="请输入分数"
                    class="layui-input">
         </div>
     </div>

@@ -106,9 +106,9 @@
                         <td>${item.achievementsScore}</td>
                          <td>
                             <a href="${pageContext.request.contextPath}/subpark/updateAchievement.do?achievementsId=${item.achievementsId}"
-                               class="layui-btn layui-btn-warm">修改</a>
+                               class="layui-btn layui-btn-sm layui-btn-warm">修改</a>
                             <a href="${pageContext.request.contextPath}/subpark/deleteAchievement.do?achievementsId=${item.achievementsId}"
-                               class="layui-btn layui-btn-warm">删除</a>
+                               class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
                         </td>
                     </tr>
                 </c:forEach>

@@ -30,13 +30,13 @@
     <div class="layui-form-item">
 
         <div class="layui-input-block">
-            <input type="text" name="attendanceCategory" value="<%=sanitation.getsId()%>">
+            <input type="hidden" name="sId" value="<%=sanitation.getsId()%>">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">卫生类别:</label>
         <div class="layui-input-block">
-            <input type="text" name="attendanceCategory" value="<%=sanitation.getSanitationCategory()%>"
+            <input type="text" name="sanitationCategory" value="<%=sanitation.getSanitationCategory()%>"
                    lay-verify="title" autocomplete="off" placeholder="请输入类别"
                    class="layui-input">
         </div>
@@ -44,14 +44,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">卫生分数:</label>
         <div class="layui-input-block">
-            <input type="text" name="attendanceScore" value="<%=sanitation.getSanitationScore()%>" lay-verify="title"
+            <input type="text" name="sanitationScore" value="<%=sanitation.getSanitationScore()%>" lay-verify="title"
                    autocomplete="off" placeholder="请输入类别"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-input-block">
         <button class="layui-btn" lay-submit="" type="submit" lay-filter="demo1">修改</button>
-        <a href="${pageContext.request.contextPath}/subpark/attendanceOperation.do" class="layui-btn">一个可跳转的按钮</a>
+        <a href="${pageContext.request.contextPath}/subpark/attendanceOperation.do" class="layui-btn">返回</a>
     </div>
     </div>
 </form>

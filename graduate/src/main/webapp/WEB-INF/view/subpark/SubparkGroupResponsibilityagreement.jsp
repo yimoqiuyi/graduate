@@ -128,7 +128,7 @@
                             <td>${item.expirationDate}</td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/group/responsibilityDownload.do?responsibleId=${item.responsibleId}"
-                                   class="layui-btn layui-btn-warm">下载</a></td>
+                                   class="layui-btn layui-btn-normal">下载</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>

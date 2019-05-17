@@ -8,7 +8,9 @@
         <result property="userId" column="user_id"/>
         <result property="sId" column="s_id"/>
     </resultMap>
-
+   <select id="selectAllWorkhealthBysId" parameterType="int" resultMap="getAllworkhealth">
+       select * from t_workhealth where s_id=#{sId}
+   </select>
     <insert id="insertOneWorkhealth" parameterType="workhealth" useGeneratedKeys="true" keyProperty="whId">
         insert into t_workhealth(user_id,s_id) values (#{userId},#{sId})
     </insert>

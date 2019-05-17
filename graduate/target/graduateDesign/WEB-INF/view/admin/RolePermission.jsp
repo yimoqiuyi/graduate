@@ -69,8 +69,7 @@
                             <td>${item.name}</td>
                             <td>${item.node}</td>
                             <th><a href="${pageContext.request.contextPath}/admin/deleteRolePermission.do?id=${item.id}"
-                                   layui-btn-sm
-                                   class="layui-btn">删除</a></th>
+                                    class="layui-btn layui-btn-sm">删除</a></th>
                         </tr>
                     </c:forEach>
                     </tbody>

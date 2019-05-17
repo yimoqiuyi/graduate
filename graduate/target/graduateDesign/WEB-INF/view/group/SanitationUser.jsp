@@ -21,6 +21,7 @@
     List <Sanitation> sanitationList= (List<Sanitation>) request.getAttribute("sanitationList");
 %>
 <div class="layui-layout layui-layout-admin">
+<c:if test="${not empty sessionScope.user}">
     <div class="layui-header">
         <div class="layui-logo">layui 后台布局</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
@@ -39,7 +40,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    ${user.userName}
+                        ${user.userName}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${pageContext.request.contextPath}/user/select.do">个人资料</a></dd>
@@ -48,6 +49,7 @@
             </li>
         </ul>
     </div>
+</c:if>
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->

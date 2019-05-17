@@ -118,7 +118,6 @@
                     {type: 'checkbox', fixed: 'left'}
                     , {field: 'roomId', title: '房间号', width: 80, sort: true, fixed: 'left', totalRowText: '合计：'}
                     , {field: 'roomPosition', title: '具体位置描述', width: 120}
-                    , {field: 'roomPicture', title: '房间平面图', width: 120}
                     , {field: 'stationNumber', title: '工位数', width: 100}
                     , {field: 'buildId', title: '栋外键', width: 100}
                     , {field: 'subparkId', title: '分园区外键', width: 120}

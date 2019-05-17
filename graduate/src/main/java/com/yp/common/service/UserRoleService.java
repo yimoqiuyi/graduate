@@ -10,7 +10,9 @@ public interface UserRoleService {
 
     public int deleteOneUserRoleById(@Param("id") int id);
 
-    public boolean updateUserRole(User_Role user_role);
+    public int updateUserRole(User_Role user_role);
 
     public User_Role selectUserRoleByUserId(@Param("userId") int userId);
+
+    public int deleteUserroleByUserId(@Param("userId") int userId);
 }

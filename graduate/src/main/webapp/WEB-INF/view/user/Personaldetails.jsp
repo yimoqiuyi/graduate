@@ -24,11 +24,7 @@
 %>
 
 <form class="layui-form" action="${pageContext.request.contextPath}/user/updateUser.do" method="post">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
             <input type="text" name="userId" hidden>
-        </div>
-    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">用户名:</label>
         <div class="layui-input-block">
@@ -147,7 +143,6 @@
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
-
     });
 </script>
 </body>

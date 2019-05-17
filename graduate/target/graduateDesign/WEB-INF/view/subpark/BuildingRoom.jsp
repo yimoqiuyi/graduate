@@ -131,8 +131,8 @@
                     , data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                      case 'add':
-                         var id = checkStatus.data[0].buildId;
-                        window.location.href = "${pageContext.request.contextPath}/subpark/AddRoom.do?buildId="+id;
+                         var id = checkStatus.data[0].roomId;
+                        window.location.href = "${pageContext.request.contextPath}/subpark/selectRoomParkassets.do?roomId="+id;
                         layer.msg('添加');
                         break;
                     case 'update':
@@ -163,7 +163,7 @@
                 var data = obj.data //获得当前行数据
                     , layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'detail') {
-                    window.location.href = "${pageContext.request.contextPath}/subpark/AddRoom.do?buildId=" + data.roomId
+                    window.location.href = "${pageContext.request.contextPath}/subpark/selectRoomParkassets.do?roomId=" + data.roomId
                     layer.msg('查看操作');
                 } else if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {

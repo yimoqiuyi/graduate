@@ -7,6 +7,9 @@ import java.util.List;
 
 //工位卫生操作
 public interface WorkhealthMapper {
+    //工位卫生查看
+    public List<Workhealth> selectAllWorkhealthBysId(@Param("sId") int sId);
+
     //工位卫生录入
     public boolean insertOneWorkhealth(Workhealth workhealth);
 

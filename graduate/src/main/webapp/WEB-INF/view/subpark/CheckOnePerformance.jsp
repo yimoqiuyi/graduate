@@ -108,7 +108,7 @@
                 </div>
                 <input type="text" name="groupId" value="<%=performance.getGroupId()%>" hidden>
                 <input type="text" name="subParkId" value="<%=performance.getSubParkId()%>" hidden>
-                <input type="text" name="generealParkId" value="<%=performance.getGeneralParkId()%>" hidden>
+                <input type="text" name="generalParkId" value="<%=performance.getGeneralParkId()%>" hidden>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo">提交</button>

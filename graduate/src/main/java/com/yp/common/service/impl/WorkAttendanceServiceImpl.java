@@ -6,10 +6,18 @@ import com.yp.common.service.WorkAttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class WorkAttendanceServiceImpl implements WorkAttendanceService {
 @Autowired
 private WorkAttendanceMapper workAttendanceMapper;
+
+    @Override
+    public List<WorkAttendance> selectAllWorkAttendanceByAttendanceId(int attendanceId) {
+        return workAttendanceMapper.selectAllWorkAttendanceByAttendanceId(attendanceId);
+    }
+
     @Override
     public boolean insertOneWorkAttendance(WorkAttendance workAttendance) {
         return workAttendanceMapper.insertOneWorkAttendance(workAttendance);

@@ -56,36 +56,26 @@
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
                 <form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateToSubpark.do" enctype="multipart/form-data" method="POST">
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <input type="hidden" name="subParkId" value="<%=subPark.getSubParkId()%>" >
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">负责人Id:</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="userName" value="<%=subPark.getUserId()%>" required lay-verify="required"
-                                   placeholder="负责人" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
+                             <input type="hidden" name="subParkId" value="<%=subPark.getSubParkId()%>" >
+
+                     <div class="layui-form-item">
                         <label class="layui-form-label">分园区名称:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="userPwd" value="<%=subPark.getSubParkName()%>" required lay-verify="required"
+                            <input type="text" name="subParkName" value="<%=subPark.getSubParkName()%>" required lay-verify="required"
                                    placeholder="名称" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">分园区联系电话</label>
                         <div class="layui-input-block">
-                            <input type="text" name="joinTime" value="<%=subPark.getSubParkPhone()%>" required lay-verify="required"
+                            <input type="text" name="subParkPhone" value="<%=subPark.getSubParkPhone()%>" required lay-verify="required"
                                    placeholder="电话" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">分园区介绍</label>
                         <div class="layui-input-block">
-                            <textarea name="subparkIntroduce"  placeholder="分园区介绍" class="layui-textarea"><%=subPark.getSubParkIntroduce()%></textarea>
+                            <textarea name="subParkIntroduce"  placeholder="分园区介绍" class="layui-textarea"><%=subPark.getSubParkIntroduce()%></textarea>
                         </div>
                     </div>
                     <div class="layui-upload">

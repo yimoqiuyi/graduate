@@ -126,7 +126,7 @@
             <if test="groupName!=null">group_name=#{groupName},</if>
             <if test="groupId!=null">group_id=#{groupId},</if>
             <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
-            <if test="generealParkId!=null">genereal_park_id=#{generealParkId},</if>
+            <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
         </trim>
         where performance_id=#{performanceId}
     </update>

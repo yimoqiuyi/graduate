@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 //系统管理员权限操作
@@ -45,7 +46,6 @@ public class RootPermissionController {
     @ResponseBody
     public ResultUtil SelectPermission(Integer page, Integer limit) {
         List<Permission> permissionList = permissionService.selectPermissionByLimit(page, limit);
-        System.out.println("11111de" + page);
         JsonConfig jsonConfig = new JsonConfig();  //排除json将要
 //        jsonConfig.setExcludes(new String[]{"workPosition"});
 //        jsonConfig.setExcludes(new String[]{"roleList", "sanitationList", "attendanceList"});
@@ -206,28 +206,32 @@ public class RootPermissionController {
 
     @RequestMapping("userRole")
     @RequiresRoles("admin")
-    public String UserRole(Integer userId, @RequestParam("rId") String rId) {
-        int roleId = Integer.parseInt(rId);
+    public String UserRole(HttpServletRequest request) {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int roleId = Integer.parseInt(request.getParameter("rId"));
         User_Role user_Role = userRoleService.selectUserRoleByUserId(userId);
-         System.out.println("22222312" + rId);
-        if (user_Role == null) {   //如果为空，就增加
-            User_Role userRole = new User_Role();
-            userRole.setUserId(userId);
-            userRole.setRoleId(roleId);
-            userRole.setUserRoleName("new");
-            userRoleService.insertOneUserRole(userRole);
-        } else {   //不为空，就更改
-            User_Role userRole = new User_Role();
-            userRole.setId(user_Role.getId());
-            userRole.setUserRoleName(user_Role.getUserRoleName());
-            userRole.setRoleId(roleId);
-            userRole.setUserId(userId);
-            userRoleService.updateUserRole(userRole);
+        Role role = roleService.selectOneRoleById(roleId);
+        System.out.println("roleId" + roleId);
+        System.out.println("userId" + userId);
+//        System.out.println("jue" + user_Role.getId());
+        if (user_Role == null) {
+            User_Role user_role = new User_Role();
+            user_role.setRoleId(roleId);
+            user_role.setUserId(userId);
+            user_role.setUserRoleName(role.getIntroduce());
+            userRoleService.insertOneUserRole(user_role);
         }
-        return "redirect:roleAssignment.do";
+        else {
+            user_Role.setUserRoleName(user_Role.getUserRoleName());
+            user_Role.setRoleId(roleId);
+            user_Role.setUserId(userId);
+            int k=userRoleService.updateUserRole(user_Role);
+            System.out.println("k0"+k);
+        }
+        return "view/admin/RoleAssignment";
     }
 
-    //查看用户角色
+    //查看用户角色checkUserRole
     @RequestMapping("checkUserRole")
     @RequiresRoles("admin")
     public ModelAndView CheckUserRole(HttpServletRequest request, ModelAndView modelAndView) {

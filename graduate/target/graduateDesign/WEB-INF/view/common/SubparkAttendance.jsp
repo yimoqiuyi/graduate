@@ -27,7 +27,7 @@
 %>
 <form class="layui-form" action="${pageContext.request.contextPath}/subpark/updateToAttendacne.do" lay-filter="example">
     <div class="layui-form-item">
-              <input type="hidden" name="attendanceCategory" value="<%=attendance.getAttendanceId()%>">
+              <input type="hidden" name="attendanceId" value="<%=attendance.getAttendanceId()%>">
      </div>
     <div class="layui-form-item">
         <label class="layui-form-label">考勤类别:</label>

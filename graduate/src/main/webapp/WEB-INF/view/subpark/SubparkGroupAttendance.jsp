@@ -90,7 +90,7 @@
                         <td>${item.state}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/subpark/selectUserAttendance.do?userId=${item.userId}"
-                               class="layui-btn layui-btn-warm">查看</a>
+                               class="layui-btn layui-btn-sm  layui-btn-warm">查看</a>
                         </td>
                     </tr>
                 </c:forEach>

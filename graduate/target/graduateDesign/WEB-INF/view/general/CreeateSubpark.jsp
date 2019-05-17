@@ -32,22 +32,22 @@
                 <li class="layui-nav-item"><a href="">首页</a></li>
                 <li class="layui-nav-item"><a
                         href="${pageContext.request.contextPath}/general/creeateSubpark.do">分园区创建</a></li>
-                <li class="layui-nav-item"><a
-                        href="${pageContext.request.contextPath}/general/selectAllSubpark.do">分园区查看</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/general/selectAllSubpark.do">分园区查看</a>
+                </li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/general/subparkSanitation.do">园区信息</a>
                 </li>
-                <ul class="layui-nav layui-layout-right">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                                ${user.userName}
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="${pageContext.request.contextPath}/user/select.do">个人资料</a></dd>
-                            <dd><a href="${pageContext.request.contextPath}/logout.do">退了</a></dd>
-                        </dl>
-                    </li>
-                </ul>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                            ${user.userName}
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="${pageContext.request.contextPath}/user/select.do">个人资料</a></dd>
+                        <dd><a href="${pageContext.request.contextPath}/logout.do">退了</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
 

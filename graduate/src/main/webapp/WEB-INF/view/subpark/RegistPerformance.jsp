@@ -24,10 +24,11 @@
 
 %>
 <form class="layui-form" action="${pageContext.request.contextPath}/subpark/insertToPerformance.do">
+    <input type="hidden" name="performanceId" value="<%=performance.getPerformanceId()%>">
     <div class="layui-form-item">
         <label class="layui-form-label">绩效分数:</label>
         <div class="layui-input-block">
-            <input type="text" name="userName" value="<%=performance.getPerformanceScore()%>" required lay-verify="required"
+            <input type="text" name="performanceScore" value="<%=performance.getPerformanceScore()%>" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
     </div>

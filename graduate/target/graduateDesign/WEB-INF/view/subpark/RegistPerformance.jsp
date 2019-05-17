@@ -24,10 +24,11 @@
 
 %>
 <form class="layui-form" action="${pageContext.request.contextPath}/subpark/insertToPerformance.do">
+    <input type="hidden" name="performanceId" value="<%=performance.getPerformanceId()%>">
     <div class="layui-form-item">
         <label class="layui-form-label">绩效分数:</label>
         <div class="layui-input-block">
-            <input type="text" name="userName" value="<%=performance.getPerformanceScore()%>" required lay-verify="required"
+            <input type="text" name="performanceScore" value="<%=performance.getPerformanceScore()%>" required lay-verify="required"
                    autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -56,8 +57,8 @@
     <input type="hidden" name="groupId" value="<%=performance.getGroupId()%>">
     <input type="hidden" name="generalParkId" value="<%=performance.getGeneralParkId()%>">
     <input type="hidden" name="subParkId" value="<%=performance.getSubParkId()%>">
-    <div class="layui-form-item" style="width: 200px">
-        <div class="layui-input-block">
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="width: 200px">
             <button class="layui-btn" lay-submit="" style="width: 80px" type="submit" lay-filter="demo1">提交</button>
             <button class="layui-btn" lay-submit="" style="width: 80px" type="reset" lay-filter="demo2">撤回</button>
         </div>

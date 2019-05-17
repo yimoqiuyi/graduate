@@ -59,15 +59,15 @@
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="${pageContext.request.contextPath}/subpark/subparkAgreement.do?groupId=<%=groupId%>">
+                        <a class="" href="${pageContext.request.contextPath}/subpark/subparkGroupAgreement.do?groupId=<%=groupId%>">
                             入园合同</a>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="${pageContext.request.contextPath}/subpark/selectBuilding.do?groupId=<%=groupId%>">
+                        <a class="" href="${pageContext.request.contextPath}/subpark/subparkGroupManagementagreement.do?groupId=<%=groupId%>">
                             资产协议</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="${pageContext.request.contextPath}/subpark/selectRoom.do?groupId=<%=groupId%>">卫生协议</a>
+                        <a href="${pageContext.request.contextPath}/subpark/subparkGroupResponsibilityagreement.do?groupId=<%=groupId%>">卫生协议</a>
                     </li>
                 </ul>
             </div>

@@ -24,12 +24,17 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public boolean updateUserRole(User_Role user_role) {
+    public int updateUserRole(User_Role user_role) {
         return user_roleMapper.updateUserRole(user_role);
     }
 
     @Override
     public User_Role selectUserRoleByUserId(int userId) {
         return user_roleMapper.selectUserRoleByUserId(userId);
+    }
+
+    @Override
+    public int deleteUserroleByUserId(int userId) {
+        return user_roleMapper.deleteUserroleByUserId(userId);
     }
 }

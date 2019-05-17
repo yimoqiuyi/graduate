@@ -86,7 +86,7 @@
             <if test="roomPicture!=null">room_picture=#{roomPicture},</if>
             <if test="stationNumber!=null">station_number=#{stationNumber},</if>
             <if test="buildId!=null">build_id=#{buildId,jdbcType=INTEGER},</if>
-            <if test="subParkId!=null">sub_park_id=#{subparkId},</if>
+            <if test="subParkId!=null">sub_park_id=#{subParkId},</if>
             <if test="generalParkId!=null">general_park_id=#{generalParkId},</if>
         </trim>
         where room_id=#{roomId}
